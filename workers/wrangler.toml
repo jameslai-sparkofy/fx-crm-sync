@@ -1,0 +1,27 @@
+name = "fx-crm-sync"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+FX_API_BASE_URL = "https://open.fxiaoke.com"
+SYNC_INTERVAL = "300000"
+
+# 開發環境使用 .dev.vars 文件
+# 生產環境使用 wrangler secret put
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fx-crm-database"
+database_id = "332221d8-61cb-4084-88dc-394e208ae8b4"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "714f07950ac84f6ba8e00d3c961a6325"
+
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "fx-crm-images"
+
+[triggers]
+# 每小時整點執行一次同步
+crons = ["0 * * * *"]

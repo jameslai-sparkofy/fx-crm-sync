@@ -1,0 +1,1996 @@
+[
+  {
+    "objectApiName": "object_8W9cb__c",
+    "displayName": "案場(SPC)",
+    "fieldCount": 48,
+    "success": true,
+    "fields": [
+      {
+        "apiName": "shift_time__c",
+        "label": "Shift Time",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__r",
+        "label": "Created By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department_id",
+        "label": "Owner Department Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department",
+        "label": "Owner Department",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_k7e6q__c__r",
+        "label": "Field K7e6q  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status",
+        "label": "Lock Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__r",
+        "label": "Data Own Department 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "create_time",
+        "label": "Create Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_1P96q__c__r",
+        "label": "Field 1P96q  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_npLvn__c__relation_ids",
+        "label": "Field Np Lvn  C  Relation Ids",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "version",
+        "label": "Version",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by",
+        "label": "Created By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team",
+        "label": "Relevant Team",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department",
+        "label": "Data Own Department",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_B2gh1__c",
+        "label": "Field B2gh1",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "name",
+        "label": "Name",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_i2Q1g__c",
+        "label": "Field I2Q1g",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "_id",
+        "label": " Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__l",
+        "label": "Data Own Department  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_WD7k1__c",
+        "label": "Field WD7k1",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_npLvn__c",
+        "label": "Field Np Lvn",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_dxr31__c__r",
+        "label": "Field Dxr31  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status__r",
+        "label": "Lock Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "is_deleted",
+        "label": "Is Deleted",
+        "dataType": "BOOLEAN",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__l",
+        "label": "Owner  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_npLvn__c__r",
+        "label": "Field Np Lvn  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team__r",
+        "label": "Relevant Team 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "shift_time__c__v",
+        "label": "Shift Time  C  V",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_23Z5i__c__r",
+        "label": "Field 23Z5i  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__r",
+        "label": "Owner 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner",
+        "label": "Owner",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_k7e6q__c__relation_ids",
+        "label": "Field K7e6q  C  Relation Ids",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_time",
+        "label": "Last Modified Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status",
+        "label": "Life Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__l",
+        "label": "Last Modified By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__l",
+        "label": "Created By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_k7e6q__c",
+        "label": "Field K7e6q",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by",
+        "label": "Last Modified By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_Q6Svh__c",
+        "label": "Field Q6Svh",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "record_type",
+        "label": "Record Type",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__r",
+        "label": "Last Modified By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_23Z5i__c",
+        "label": "Field 23Z5i",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_XuJP2__c",
+        "label": "Field Xu JP2",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status__r",
+        "label": "Life Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_1P96q__c",
+        "label": "Field 1P96q",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_1P96q__c__relation_ids",
+        "label": "Field 1P96q  C  Relation Ids",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_tXAko__c",
+        "label": "Field T XAko",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_dxr31__c",
+        "label": "Field Dxr31",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  {
+    "objectApiName": "object_k1XqG__c",
+    "displayName": "SPC維修單",
+    "fieldCount": 48,
+    "success": true,
+    "fields": [
+      {
+        "apiName": "created_by__r",
+        "label": "Created By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status_before_invalid",
+        "label": "Life Status Before Invalid",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department_id",
+        "label": "Owner Department Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department",
+        "label": "Owner Department",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_SW6Eb__c",
+        "label": "Field SW6Eb",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "building_type__c",
+        "label": "Building Type",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status",
+        "label": "Lock Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__r",
+        "label": "Data Own Department 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "create_time",
+        "label": "Create Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "version",
+        "label": "Version",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by",
+        "label": "Created By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team",
+        "label": "Relevant Team",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_Gm2wG__c",
+        "label": "Field Gm2w G",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department",
+        "label": "Data Own Department",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "name",
+        "label": "Name",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "_id",
+        "label": " Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__l",
+        "label": "Data Own Department  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_7Aw8e__c",
+        "label": "Field 7Aw8e",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "location__c",
+        "label": "Location",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status__r",
+        "label": "Lock Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "is_deleted",
+        "label": "Is Deleted",
+        "dataType": "BOOLEAN",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__l",
+        "label": "Owner  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team__r",
+        "label": "Relevant Team 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__r",
+        "label": "Owner 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner",
+        "label": "Owner",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_time",
+        "label": "Last Modified Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status",
+        "label": "Life Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__l",
+        "label": "Last Modified By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__l",
+        "label": "Created By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by",
+        "label": "Last Modified By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "record_type",
+        "label": "Record Type",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__r",
+        "label": "Last Modified By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status__r",
+        "label": "Life Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_87raN__c",
+        "label": "Field 87ra N",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "shift_time__c",
+        "label": "Shift Time",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_sxZVc__c",
+        "label": "Field Sx ZVc",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "property_site__c__r",
+        "label": "Property Site  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "photo__c",
+        "label": "Photo",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "property_site__c__relation_ids",
+        "label": "Property Site  C  Relation Ids",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_sxZVc__c__r",
+        "label": "Field Sx ZVc  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_g0vub__c",
+        "label": "Field G0vub",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "shift_time__c__relation_ids",
+        "label": "Shift Time  C  Relation Ids",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "property_site__c",
+        "label": "Property Site",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "work_shift_quotation_image__c",
+        "label": "Work Shift Quotation Image",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_sxZVc__c__relation_ids",
+        "label": "Field Sx ZVc  C  Relation Ids",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "movie__c",
+        "label": "Movie",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "area__c",
+        "label": "Area",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "shift_time__c__r",
+        "label": "Shift Time  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  {
+    "objectApiName": "object_50HJ8__c",
+    "displayName": "工地師父",
+    "fieldCount": 0,
+    "success": false,
+    "error": "無法獲取欄位"
+  },
+  {
+    "objectApiName": "site_cabinet__c",
+    "displayName": "案場(浴櫃)",
+    "fieldCount": 49,
+    "success": true,
+    "fields": [
+      {
+        "apiName": "field_3T38o__c",
+        "label": "Field 3T38o",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_PuaLk__c",
+        "label": "Field Pua Lk",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__r",
+        "label": "Created By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_tyRfE__c",
+        "label": "Field Ty Rf E",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department_id",
+        "label": "Owner Department Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department",
+        "label": "Owner Department",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status",
+        "label": "Lock Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__r",
+        "label": "Data Own Department 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "create_time",
+        "label": "Create Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_1P96q__c__r",
+        "label": "Field 1P96q  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_d2O5i__c",
+        "label": "Field D2O5i",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_V3d91__c",
+        "label": "Field V3d91",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "version",
+        "label": "Version",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by",
+        "label": "Created By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team",
+        "label": "Relevant Team",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_v1x3S__c",
+        "label": "Field V1x3S",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department",
+        "label": "Data Own Department",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "name",
+        "label": "Name",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "_id",
+        "label": " Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__l",
+        "label": "Data Own Department  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_03U9h__c",
+        "label": "Field 03U9h",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_WD7k1__c",
+        "label": "Field WD7k1",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "location__c",
+        "label": "Location",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_dxr31__c__r",
+        "label": "Field Dxr31  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status__r",
+        "label": "Lock Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "is_deleted",
+        "label": "Is Deleted",
+        "dataType": "BOOLEAN",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_1zk34__c",
+        "label": "Field 1zk34",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__l",
+        "label": "Owner  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team__r",
+        "label": "Relevant Team 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_23Z5i__c__r",
+        "label": "Field 23Z5i  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__r",
+        "label": "Owner 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "construction_completed__c",
+        "label": "Construction Completed",
+        "dataType": "BOOLEAN",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner",
+        "label": "Owner",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_3Fqof__c",
+        "label": "Field 3Fqof",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_time",
+        "label": "Last Modified Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status",
+        "label": "Life Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__l",
+        "label": "Last Modified By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__l",
+        "label": "Created By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by",
+        "label": "Last Modified By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_Q6Svh__c",
+        "label": "Field Q6Svh",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "record_type",
+        "label": "Record Type",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__r",
+        "label": "Last Modified By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_23Z5i__c",
+        "label": "Field 23Z5i",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_XuJP2__c",
+        "label": "Field Xu JP2",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status__r",
+        "label": "Life Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_1P96q__c",
+        "label": "Field 1P96q",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_1P96q__c__relation_ids",
+        "label": "Field 1P96q  C  Relation Ids",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_62279__c",
+        "label": "Field 62279",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_dxr31__c",
+        "label": "Field Dxr31",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  {
+    "objectApiName": "progress_management_announ__c",
+    "displayName": "進度管理公告",
+    "fieldCount": 32,
+    "success": true,
+    "fields": [
+      {
+        "apiName": "lock_status__r",
+        "label": "Lock Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_RFr42__c__relation_ids",
+        "label": "Field RFr42  C  Relation Ids",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "is_deleted",
+        "label": "Is Deleted",
+        "dataType": "BOOLEAN",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__r",
+        "label": "Created By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department_id",
+        "label": "Owner Department Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__l",
+        "label": "Owner  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department",
+        "label": "Owner Department",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team__r",
+        "label": "Relevant Team 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_dvR88__c",
+        "label": "Field Dv R88",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__r",
+        "label": "Owner 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner",
+        "label": "Owner",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status",
+        "label": "Lock Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_time",
+        "label": "Last Modified Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__r",
+        "label": "Data Own Department 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "create_time",
+        "label": "Create Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status",
+        "label": "Life Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__l",
+        "label": "Last Modified By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__l",
+        "label": "Created By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by",
+        "label": "Last Modified By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "version",
+        "label": "Version",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by",
+        "label": "Created By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "record_type",
+        "label": "Record Type",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team",
+        "label": "Relevant Team",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__r",
+        "label": "Last Modified By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "announcement_content__c",
+        "label": "Announcement Content",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_RFr42__c__r",
+        "label": "Field RFr42  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status__r",
+        "label": "Life Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department",
+        "label": "Data Own Department",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "name",
+        "label": "Name",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_RFr42__c",
+        "label": "Field RFr42",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "_id",
+        "label": " Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__l",
+        "label": "Data Own Department  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  {
+    "objectApiName": "NewOpportunityObj",
+    "displayName": "商機",
+    "fieldCount": 61,
+    "success": true,
+    "fields": [
+      {
+        "apiName": "account_id__r",
+        "label": "Account Id 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "cost_time",
+        "label": "Cost Time",
+        "dataType": "TIMESTAMP",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "sales_stage__r",
+        "label": "Sales Stage 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department_id",
+        "label": "Owner Department Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "currentStageIndex",
+        "label": "Current Stage Index",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__r",
+        "label": "Data Own Department 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "probability",
+        "label": "Probability",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "version",
+        "label": "Version",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_SdEgv__c",
+        "label": "Field Sd Egv",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "opp_discount",
+        "label": "Opp Discount",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "sales_process_id",
+        "label": "Sales Process Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__l",
+        "label": "Data Own Department  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_zO24t__c",
+        "label": "Field Z O24t",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_e8m3q__c",
+        "label": "Field E8m3q",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "sales_status",
+        "label": "Sales Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "sales_stage",
+        "label": "Sales Stage",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "probability_amount",
+        "label": "Probability Amount",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "sales_process_id__r",
+        "label": "Sales Process Id 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "sales_status__r",
+        "label": "Sales Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_time",
+        "label": "Last Modified Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status",
+        "label": "Life Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_vE1Zn__c",
+        "label": "Field V E1Zn",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "account_id",
+        "label": "Account Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "account_id__relation_ids",
+        "label": "Account Id  Relation Ids",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "close_date",
+        "label": "Close Date",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "extend_obj_data_id",
+        "label": "Extend Obj Data Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__r",
+        "label": "Created By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department",
+        "label": "Owner Department",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "opp_lines_sum",
+        "label": "Opp Lines Sum",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status",
+        "label": "Lock Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "create_time",
+        "label": "Create Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_followed_time",
+        "label": "Last Followed Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by",
+        "label": "Created By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_hh49z__c",
+        "label": "Field Hh49z",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team",
+        "label": "Relevant Team",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department",
+        "label": "Data Own Department",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_lmjjf__c",
+        "label": "Field Lmjjf",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "name",
+        "label": "Name",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "_id",
+        "label": " Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_nI1xS__c",
+        "label": "Field N I1x S",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status__r",
+        "label": "Lock Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "totalStageCount",
+        "label": "Total Stage Count",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "is_deleted",
+        "label": "Is Deleted",
+        "dataType": "BOOLEAN",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "stg_changed_time",
+        "label": "Stg Changed Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__l",
+        "label": "Owner  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_Mrn1l__c",
+        "label": "Field Mrn1l",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team__r",
+        "label": "Relevant Team 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__r",
+        "label": "Owner 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner",
+        "label": "Owner",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "amount",
+        "label": "Amount",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_i32Uj__c",
+        "label": "Field I32Uj",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__l",
+        "label": "Last Modified By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__l",
+        "label": "Created By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_5co25__c",
+        "label": "Field 5co25",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by",
+        "label": "Last Modified By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "record_type",
+        "label": "Record Type",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__r",
+        "label": "Last Modified By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status__r",
+        "label": "Life Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_30rKQ__c",
+        "label": "Field 30r KQ",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_lmjjf__c__r",
+        "label": "Field Lmjjf  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_Kt4Pg__c",
+        "label": "Field Kt4Pg",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      }
+    ]
+  },
+  {
+    "objectApiName": "SupplierObj",
+    "displayName": "供應商",
+    "fieldCount": 39,
+    "success": true,
+    "fields": [
+      {
+        "apiName": "is_enable",
+        "label": "Is Enable",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "extend_obj_data_id",
+        "label": "Extend Obj Data Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__r",
+        "label": "Created By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department_id",
+        "label": "Owner Department Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner_department",
+        "label": "Owner Department",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "tel",
+        "label": "Tel",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status",
+        "label": "Lock Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__r",
+        "label": "Data Own Department 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "create_time",
+        "label": "Create Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "version",
+        "label": "Version",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by",
+        "label": "Created By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team",
+        "label": "Relevant Team",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department",
+        "label": "Data Own Department",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "name",
+        "label": "Name",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "_id",
+        "label": " Id",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "data_own_department__l",
+        "label": "Data Own Department  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_S4126__c__r",
+        "label": "Field S4126  C 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "enterprise_registration",
+        "label": "Enterprise Registration",
+        "dataType": "BOOLEAN",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_MK20f__c",
+        "label": "Field MK20f",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "lock_status__r",
+        "label": "Lock Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_M42L8__c",
+        "label": "Field M42L8",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "is_deleted",
+        "label": "Is Deleted",
+        "dataType": "BOOLEAN",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_S4126__c",
+        "label": "Field S4126",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__l",
+        "label": "Owner  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "relevant_team__r",
+        "label": "Relevant Team 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner__r",
+        "label": "Owner 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "owner",
+        "label": "Owner",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "address",
+        "label": "Address",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_time",
+        "label": "Last Modified Time",
+        "dataType": "NUMBER",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status",
+        "label": "Life Status",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__l",
+        "label": "Last Modified By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "created_by__l",
+        "label": "Created By  L",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "is_enable__r",
+        "label": "Is Enable 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by",
+        "label": "Last Modified By",
+        "dataType": "MULTISELECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "record_type",
+        "label": "Record Type",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "last_modified_by__r",
+        "label": "Last Modified By 關聯",
+        "dataType": "OBJECT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "life_status__r",
+        "label": "Life Status 關聯",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_RNviK__c",
+        "label": "Field RNvi K",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      },
+      {
+        "apiName": "field_Vsk2n__c",
+        "label": "Field Vsk2n",
+        "dataType": "TEXT",
+        "required": false,
+        "description": ""
+      }
+    ]
+  }
+]

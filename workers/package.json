@@ -1,0 +1,18 @@
+{
+  "name": "fx-crm-sync-worker",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker for FX CRM synchronization",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "dependencies": {
+    "itty-router": "^4.0.0",
+    "puppeteer": "^24.16.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.28.1"
+  }
+}

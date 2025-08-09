@@ -1,0 +1,12 @@
+{
+  "hasOpportunity": true,
+  "hasBathroomCabinet": false,
+  "hasDatabase": true,
+  "hasPredefined": true,
+  "hasFieldMappings": true,
+  "opportunityMatches": 7,
+  "bathroomMatches": 0,
+  "jsonObjectsFound": 123,
+  "htmlLength": 54880,
+  "textLength": 1567
+}

@@ -1,0 +1,79 @@
+{
+  "timestamp": "2025-08-09T10:53:19.343Z",
+  "database": {
+    "stats": {
+      "success": true,
+      "data": {
+        "tables": [
+          {
+            "apiName": "NewOpportunityObj",
+            "displayName": "商機",
+            "tableName": "newopportunityobj",
+            "recordCount": 513,
+            "lastSync": "2025-08-09T18:37:43.167Z"
+          },
+          {
+            "apiName": "NewOpportunityContactsObj",
+            "displayName": "商機連絡人",
+            "tableName": "newopportunitycontactsobj",
+            "recordCount": 63,
+            "lastSync": "2025-08-09T11:59:03.888Z"
+          },
+          {
+            "apiName": "object_8W9cb__c",
+            "displayName": "案場",
+            "tableName": "object_8w9cb__c",
+            "recordCount": 4136,
+            "lastSync": "2025-08-09T18:49:26.316Z"
+          },
+          {
+            "apiName": "object_k1XqG__c",
+            "displayName": "維修單",
+            "tableName": "object_k1xqg__c",
+            "recordCount": 112,
+            "lastSync": "2025-08-09T18:37:31.715Z"
+          },
+          {
+            "apiName": "object_50HJ8__c",
+            "displayName": "工地師父",
+            "tableName": "object_50hj8__c",
+            "recordCount": 48,
+            "lastSync": "2025-08-09T18:00:22.298Z"
+          },
+          {
+            "apiName": "SupplierObj",
+            "displayName": "供應商",
+            "tableName": "supplierobj",
+            "recordCount": 75,
+            "lastSync": "2025-08-09T18:37:46.632Z"
+          },
+          {
+            "apiName": "site_cabinet__c",
+            "displayName": "案場(浴櫃)",
+            "tableName": "site_cabinet__c",
+            "recordCount": 1,
+            "lastSync": "2025-08-09T18:37:36.979Z"
+          },
+          {
+            "apiName": "progress_management_announ__c",
+            "displayName": "進度管理公告",
+            "tableName": "progress_management_announ__c",
+            "recordCount": 1,
+            "lastSync": "2025-08-09T18:37:40.128Z"
+          }
+        ]
+      }
+    },
+    "directQuery": {
+      "error": "Not Found"
+    }
+  },
+  "worker": {
+    "error": "Not Found"
+  },
+  "summary": {
+    "databaseConnected": true,
+    "fieldsInDatabase": false,
+    "workerResponding": true
+  }
+}

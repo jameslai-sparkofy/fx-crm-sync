@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上傳欄位對應 CSV</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+    <script src="https://unpkg.com/element-plus"></script>
+    <script src="https://unpkg.com/papaparse@5.3.0/papaparse.min.js"></script>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: #f5f7fa; 
+            padding: 20px;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        }
+        .upload-area {
+            border: 2px dashed #409eff;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-area:hover {
+            background: #f0f9ff;
+            border-color: #66b1ff;
+        }
+        .upload-area.dragover {
+            background: #e6f7ff;
+            border-color: #40a9ff;
+        }
+        .preview-table {
+            margin-top: 20px;
+        }
+        .code-output {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>上傳欄位對應 CSV 檔案</h1>
+        <p>請上傳從紛享銷客匯出的欄位對應 CSV 檔案</p>
+        
+        <el-tabs v-model="activeTab">
+            <el-tab-pane label="上傳 CSV" name="upload">
+                <el-select v-model="selectedObject" placeholder="選擇對象類型" style="width: 100%; margin-bottom: 20px;">
+                    <el-option label="案場(SPC) - object_8W9cb__c" value="object_8W9cb__c"></el-option>
+                    <el-option label="案場(浴櫃) - site_cabinet__c" value="site_cabinet__c"></el-option>
+                    <el-option label="維修單 - object_k1XqG__c" value="object_k1XqG__c"></el-option>
+                    <el-option label="工地師父 - object_50HJ8__c" value="object_50HJ8__c"></el-option>
+                    <el-option label="供應商 - SupplierObj" value="SupplierObj"></el-option>
+                    <el-option label="商機 - NewOpportunityObj" value="NewOpportunityObj"></el-option>
+                    <el-option label="進度管理公告 - progress_management_announ__c" value="progress_management_announ__c"></el-option>
+                </el-select>
+                
+                <div 
+                    class="upload-area"
+                    @click="selectFile"
+                    @dragover.prevent="dragOver"
+                    @dragleave.prevent="dragLeave"
+                    @drop.prevent="handleDrop"
+                    :class="{ dragover: isDragging }">
+                    <el-icon :size="48" style="color: #409eff;">
+                        <Upload />
+                    </el-icon>
+                    <p style="margin: 10px 0; color: #606266;">點擊或拖拽 CSV 檔案到此處</p>
+                    <p style="margin: 0; color: #909399; font-size: 14px;">支援的格式: .csv</p>
+                </div>
+                
+                <input 
+                    ref="fileInput" 
+                    type="file" 
+                    accept=".csv" 
+                    style="display: none;"
+                    @change="handleFileSelect">
+                
+                <div v-if="parsedData.length > 0" class="preview-table">
+                    <h3>預覽數據（前10行）</h3>
+                    <el-table :data="parsedData.slice(0, 10)" border>
+                        <el-table-column prop="apiName" label="API 名稱" width="200"></el-table-column>
+                        <el-table-column prop="label" label="顯示名稱" width="200"></el-table-column>
+                        <el-table-column prop="dataType" label="數據類型" width="120"></el-table-column>
+                        <el-table-column prop="required" label="必填" width="80">
+                            <template #default="scope">
+                                <el-tag v-if="scope.row.required" type="danger" size="small">必填</el-tag>
+                                <el-tag v-else type="info" size="small">選填</el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="description" label="描述"></el-table-column>
+                    </el-table>
+                    
+                    <div style="margin-top: 20px;">
+                        <el-button type="primary" @click="generateCode">生成程式碼</el-button>
+                        <el-button @click="clearData">清除</el-button>
+                    </div>
+                </div>
+            </el-tab-pane>
+            
+            <el-tab-pane label="生成的程式碼" name="code" v-if="generatedCode">
+                <div style="margin-bottom: 10px;">
+                    <el-button type="primary" size="small" @click="copyCode">複製程式碼</el-button>
+                </div>
+                <div class="code-output">{{ generatedCode }}</div>
+            </el-tab-pane>
+        </el-tabs>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        const { ElMessage } = ElementPlus;
+        
+        createApp({
+            data() {
+                return {
+                    activeTab: 'upload',
+                    selectedObject: 'object_8W9cb__c',
+                    isDragging: false,
+                    parsedData: [],
+                    generatedCode: '',
+                    columnMapping: {
+                        // 可能的欄位名稱映射
+                        'API名稱': 'apiName',
+                        'api名稱': 'apiName',
+                        'apiName': 'apiName',
+                        'API Name': 'apiName',
+                        'Field API Name': 'apiName',
+                        '欄位API名稱': 'apiName',
+                        
+                        '顯示名稱': 'label',
+                        '字段名稱': 'label',
+                        '欄位名稱': 'label',
+                        'label': 'label',
+                        'Label': 'label',
+                        'Display Name': 'label',
+                        'Field Label': 'label',
+                        
+                        '數據類型': 'dataType',
+                        '資料類型': 'dataType',
+                        '類型': 'dataType',
+                        'dataType': 'dataType',
+                        'Data Type': 'dataType',
+                        'Type': 'dataType',
+                        'Field Type': 'dataType',
+                        
+                        '是否必填': 'required',
+                        '必填': 'required',
+                        'required': 'required',
+                        'Required': 'required',
+                        'Is Required': 'required',
+                        
+                        '描述': 'description',
+                        '說明': 'description',
+                        '備註': 'description',
+                        'description': 'description',
+                        'Description': 'description',
+                        'Help Text': 'description'
+                    }
+                };
+            },
+            
+            methods: {
+                selectFile() {
+                    this.$refs.fileInput.click();
+                },
+                
+                handleFileSelect(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.parseCSV(file);
+                    }
+                },
+                
+                dragOver(event) {
+                    this.isDragging = true;
+                },
+                
+                dragLeave(event) {
+                    this.isDragging = false;
+                },
+                
+                handleDrop(event) {
+                    this.isDragging = false;
+                    const files = event.dataTransfer.files;
+                    if (files.length > 0) {
+                        this.parseCSV(files[0]);
+                    }
+                },
+                
+                parseCSV(file) {
+                    if (!file.name.endsWith('.csv')) {
+                        ElMessage.error('請上傳 CSV 檔案');
+                        return;
+                    }
+                    
+                    Papa.parse(file, {
+                        header: true,
+                        encoding: 'UTF-8',
+                        complete: (results) => {
+                            this.processCSVData(results.data);
+                        },
+                        error: (error) => {
+                            ElMessage.error('解析 CSV 失敗: ' + error.message);
+                        }
+                    });
+                },
+                
+                processCSVData(data) {
+                    // 過濾空行
+                    const validData = data.filter(row => {
+                        return Object.values(row).some(value => value && value.trim());
+                    });
+                    
+                    if (validData.length === 0) {
+                        ElMessage.error('CSV 檔案沒有有效數據');
+                        return;
+                    }
+                    
+                    // 自動檢測欄位映射
+                    const firstRow = validData[0];
+                    const headers = Object.keys(firstRow);
+                    
+                    const fieldMap = {};
+                    headers.forEach(header => {
+                        const normalizedHeader = header.trim();
+                        if (this.columnMapping[normalizedHeader]) {
+                            fieldMap[header] = this.columnMapping[normalizedHeader];
+                        }
+                    });
+                    
+                    // 轉換數據
+                    this.parsedData = validData.map(row => {
+                        const converted = {};
+                        
+                        for (const [csvColumn, field] of Object.entries(fieldMap)) {
+                            const value = row[csvColumn];
+                            
+                            if (field === 'required') {
+                                converted[field] = value === '是' || 
+                                                 value === 'true' || 
+                                                 value === 'TRUE' || 
+                                                 value === 'Yes' || 
+                                                 value === 'Y' ||
+                                                 value === '必填';
+                            } else {
+                                converted[field] = value || '';
+                            }
+                        }
+                        
+                        // 如果沒有自動映射成功，嘗試按順序映射
+                        if (!converted.apiName) {
+                            const values = Object.values(row);
+                            if (values.length >= 3) {
+                                converted.apiName = values[0] || '';
+                                converted.label = values[1] || '';
+                                converted.dataType = values[2] || 'TEXT';
+                                converted.required = values[3] === '是' || values[3] === 'true';
+                                converted.description = values[4] || '';
+                            }
+                        }
+                        
+                        return converted;
+                    });
+                    
+                    ElMessage.success(`成功解析 ${this.parsedData.length} 個欄位`);
+                },
+                
+                generateCode() {
+                    if (this.parsedData.length === 0) {
+                        ElMessage.warning('請先上傳 CSV 檔案');
+                        return;
+                    }
+                    
+                    const objectName = this.selectedObject;
+                    const displayName = this.getDisplayName(objectName);
+                    
+                    let code = `// ${displayName} - ${objectName}\n`;
+                    code += `'${objectName}': {\n`;
+                    code += `  displayName: '${displayName}',\n`;
+                    code += `  fields: [\n`;
+                    
+                    this.parsedData.forEach((field, index) => {
+                        code += `    {\n`;
+                        code += `      apiName: '${field.apiName || ''}',\n`;
+                        code += `      label: '${field.label || ''}',\n`;
+                        code += `      dataType: '${field.dataType || 'TEXT'}',\n`;
+                        code += `      required: ${field.required || false},\n`;
+                        code += `      description: '${field.description || ''}'\n`;
+                        code += `    }${index < this.parsedData.length - 1 ? ',' : ''}\n`;
+                    });
+                    
+                    code += `  ]\n`;
+                    code += `}`;
+                    
+                    this.generatedCode = code;
+                    this.activeTab = 'code';
+                    ElMessage.success('程式碼生成成功');
+                },
+                
+                getDisplayName(apiName) {
+                    const names = {
+                        'object_8W9cb__c': '案場(SPC)',
+                        'site_cabinet__c': '案場(浴櫃)',
+                        'object_k1XqG__c': '維修單',
+                        'object_50HJ8__c': '工地師父',
+                        'SupplierObj': '供應商',
+                        'NewOpportunityObj': '商機',
+                        'progress_management_announ__c': '進度管理公告'
+                    };
+                    return names[apiName] || apiName;
+                },
+                
+                copyCode() {
+                    navigator.clipboard.writeText(this.generatedCode).then(() => {
+                        ElMessage.success('程式碼已複製到剪貼簿');
+                    }).catch(() => {
+                        ElMessage.error('複製失敗，請手動複製');
+                    });
+                },
+                
+                clearData() {
+                    this.parsedData = [];
+                    this.generatedCode = '';
+                    this.$refs.fileInput.value = '';
+                    ElMessage.info('已清除數據');
+                }
+            }
+        }).use(ElementPlus).mount('#app');
+    </script>
+</body>
+</html>

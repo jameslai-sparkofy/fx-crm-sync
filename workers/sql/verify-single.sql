@@ -1,0 +1,1 @@
+SELECT _id, name, shift_time__c FROM object_8w9cb__c WHERE _id = '6874b50fd748ab000196001b'

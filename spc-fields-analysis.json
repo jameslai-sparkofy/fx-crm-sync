@@ -1,0 +1,625 @@
+{
+  "objectApiName": "object_8W9cb__c",
+  "fields": [
+    {
+      "apiName": "created_by__r",
+      "isCustom": false,
+      "exampleValue": {
+        "picAddr": "",
+        "description": "",
+        "dept": "1000",
+        "supervisorId": "1000",
+        "empNum": "00022",
+        "modifyTime": 1753755166813,
+        "post": "",
+        "createTime": 1752131337130,
+        "phone": "",
+        "name": "楊佳玲",
+        "nickname": "楊佳玲",
+        "tenantId": "781014",
+        "id": "1090",
+        "email": "lynn@yes-ceramics.com",
+        "status": 0
+      },
+      "dataType": "object"
+    },
+    {
+      "apiName": "owner_department_id",
+      "isCustom": false,
+      "exampleValue": "1006",
+      "dataType": "string"
+    },
+    {
+      "apiName": "total_num",
+      "isCustom": false,
+      "exampleValue": 3277,
+      "dataType": "number"
+    },
+    {
+      "apiName": "owner_department",
+      "isCustom": false,
+      "exampleValue": "業務二部",
+      "dataType": "string"
+    },
+    {
+      "apiName": "searchAfterId",
+      "isCustom": false,
+      "exampleValue": [
+        "1754042605741",
+        "1754042605773839",
+        "6874b50fd748ab0001960018"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "field_k7e6q__c__r",
+      "isCustom": false,
+      "exampleValue": "勝興-忠孝段",
+      "dataType": "string"
+    },
+    {
+      "apiName": "lock_status",
+      "isCustom": false,
+      "exampleValue": "0",
+      "dataType": "string"
+    },
+    {
+      "apiName": "data_own_department__r",
+      "isCustom": false,
+      "exampleValue": {
+        "deptName": "業務二部",
+        "leaderUserId": "1000",
+        "deptId": "1006",
+        "deptType": "dept",
+        "parentId": "999999",
+        "status": 0
+      },
+      "dataType": "object"
+    },
+    {
+      "apiName": "create_time",
+      "isCustom": false,
+      "exampleValue": 1752478991524,
+      "dataType": "number"
+    },
+    {
+      "apiName": "field_1P96q__c__r",
+      "isCustom": false,
+      "exampleValue": "勝興-忠孝段-2024",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_npLvn__c__relation_ids",
+      "isCustom": false,
+      "exampleValue": "688c8f7d5450af00013c7fce",
+      "dataType": "string"
+    },
+    {
+      "apiName": "version",
+      "isCustom": false,
+      "exampleValue": "3",
+      "dataType": "string"
+    },
+    {
+      "apiName": "created_by",
+      "isCustom": false,
+      "exampleValue": [
+        "FSUID_BDF4911AC3ADCD331A26BDD4550DB6C0"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "relevant_team",
+      "isCustom": false,
+      "exampleValue": [
+        {
+          "teamMemberEmployee": [
+            "FSUID_303D4E189251A699407AA8A9F42B0D02"
+          ],
+          "teamMemberType": "0",
+          "teamMemberRole": "1",
+          "teamMemberPermissionType": "2",
+          "teamMemberDeptCascade": "0"
+        }
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "data_own_department",
+      "isCustom": false,
+      "exampleValue": [
+        "1006"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "name",
+      "isCustom": false,
+      "exampleValue": "25-07-14-3553",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_i2Q1g__c",
+      "isCustom": true,
+      "exampleValue": "18.22",
+      "dataType": "string"
+    },
+    {
+      "apiName": "_id",
+      "isCustom": false,
+      "exampleValue": "6874b50fd748ab0001960018",
+      "dataType": "string"
+    },
+    {
+      "apiName": "data_own_department__l",
+      "isCustom": false,
+      "exampleValue": [
+        {
+          "parentId": "999999",
+          "deptId": "1006",
+          "deptName": "業務二部",
+          "leaderUserId": "1000",
+          "status": 0,
+          "deptType": "dept"
+        }
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "field_WD7k1__c",
+      "isCustom": true,
+      "exampleValue": "C",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_npLvn__c",
+      "isCustom": true,
+      "exampleValue": "688c8f7d5450af00013c7fce",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_dxr31__c__r",
+      "isCustom": false,
+      "exampleValue": "工地",
+      "dataType": "string"
+    },
+    {
+      "apiName": "lock_status__r",
+      "isCustom": false,
+      "exampleValue": "未锁定",
+      "dataType": "string"
+    },
+    {
+      "apiName": "is_deleted",
+      "isCustom": false,
+      "exampleValue": false,
+      "dataType": "boolean"
+    },
+    {
+      "apiName": "owner__l",
+      "isCustom": false,
+      "exampleValue": [
+        {
+          "id": "1072",
+          "tenantId": "781014",
+          "name": "楊凱中(已停用)",
+          "picAddr": "",
+          "email": "",
+          "nickname": "楊凱中(已停用)",
+          "supervisorId": "1000",
+          "phone": "",
+          "description": "",
+          "status": 1,
+          "createTime": 1710120403898,
+          "modifyTime": 1744858610244,
+          "dept": "1006",
+          "post": "",
+          "empNum": "00009"
+        }
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "field_npLvn__c__r",
+      "isCustom": false,
+      "exampleValue": "勝興-忠孝段-樣品層-築愛家",
+      "dataType": "string"
+    },
+    {
+      "apiName": "relevant_team__r",
+      "isCustom": false,
+      "exampleValue": "楊凱中(已停用)",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_23Z5i__c__r",
+      "isCustom": false,
+      "exampleValue": "準備中",
+      "dataType": "string"
+    },
+    {
+      "apiName": "owner__r",
+      "isCustom": false,
+      "exampleValue": {
+        "picAddr": "",
+        "description": "",
+        "dept": "1006",
+        "supervisorId": "1000",
+        "empNum": "00009",
+        "modifyTime": 1744858610244,
+        "post": "",
+        "createTime": 1710120403898,
+        "phone": "",
+        "name": "楊凱中(已停用)",
+        "nickname": "楊凱中(已停用)",
+        "tenantId": "781014",
+        "id": "1072",
+        "email": "",
+        "status": 1
+      },
+      "dataType": "object"
+    },
+    {
+      "apiName": "owner",
+      "isCustom": false,
+      "exampleValue": [
+        "FSUID_303D4E189251A699407AA8A9F42B0D02"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "field_k7e6q__c__relation_ids",
+      "isCustom": false,
+      "exampleValue": "68746b9e5a99e00001446880",
+      "dataType": "string"
+    },
+    {
+      "apiName": "last_modified_time",
+      "isCustom": false,
+      "exampleValue": 1754042605741,
+      "dataType": "number"
+    },
+    {
+      "apiName": "life_status",
+      "isCustom": false,
+      "exampleValue": "normal",
+      "dataType": "string"
+    },
+    {
+      "apiName": "last_modified_by__l",
+      "isCustom": false,
+      "exampleValue": [
+        {
+          "id": "1090",
+          "tenantId": "781014",
+          "name": "楊佳玲",
+          "picAddr": "",
+          "email": "lynn@yes-ceramics.com",
+          "nickname": "楊佳玲",
+          "supervisorId": "1000",
+          "phone": "",
+          "description": "",
+          "status": 0,
+          "createTime": 1752131337130,
+          "modifyTime": 1753755166813,
+          "dept": "1000",
+          "post": "",
+          "empNum": "00022"
+        }
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "created_by__l",
+      "isCustom": false,
+      "exampleValue": [
+        {
+          "id": "1090",
+          "tenantId": "781014",
+          "name": "楊佳玲",
+          "picAddr": "",
+          "email": "lynn@yes-ceramics.com",
+          "nickname": "楊佳玲",
+          "supervisorId": "1000",
+          "phone": "",
+          "description": "",
+          "status": 0,
+          "createTime": 1752131337130,
+          "modifyTime": 1753755166813,
+          "dept": "1000",
+          "post": "",
+          "empNum": "00022"
+        }
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "field_k7e6q__c",
+      "isCustom": true,
+      "exampleValue": "68746b9e5a99e00001446880",
+      "dataType": "string"
+    },
+    {
+      "apiName": "last_modified_by",
+      "isCustom": false,
+      "exampleValue": [
+        "FSUID_BDF4911AC3ADCD331A26BDD4550DB6C0"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "field_Q6Svh__c",
+      "isCustom": true,
+      "exampleValue": "2.0",
+      "dataType": "string"
+    },
+    {
+      "apiName": "record_type",
+      "isCustom": false,
+      "exampleValue": "default__c",
+      "dataType": "string"
+    },
+    {
+      "apiName": "last_modified_by__r",
+      "isCustom": false,
+      "exampleValue": {
+        "picAddr": "",
+        "description": "",
+        "dept": "1000",
+        "supervisorId": "1000",
+        "empNum": "00022",
+        "modifyTime": 1753755166813,
+        "post": "",
+        "createTime": 1752131337130,
+        "phone": "",
+        "name": "楊佳玲",
+        "nickname": "楊佳玲",
+        "tenantId": "781014",
+        "id": "1090",
+        "email": "lynn@yes-ceramics.com",
+        "status": 0
+      },
+      "dataType": "object"
+    },
+    {
+      "apiName": "field_23Z5i__c",
+      "isCustom": true,
+      "exampleValue": [
+        "t8740Rp11"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "field_XuJP2__c",
+      "isCustom": true,
+      "exampleValue": "C1",
+      "dataType": "string"
+    },
+    {
+      "apiName": "life_status__r",
+      "isCustom": false,
+      "exampleValue": "正常",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_1P96q__c",
+      "isCustom": true,
+      "exampleValue": "651e2befd830ad00013cfcf7",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_1P96q__c__relation_ids",
+      "isCustom": false,
+      "exampleValue": "651e2befd830ad00013cfcf7",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_tXAko__c",
+      "isCustom": true,
+      "exampleValue": "18.22",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_dxr31__c",
+      "isCustom": true,
+      "exampleValue": "option1",
+      "dataType": "string"
+    }
+  ],
+  "summary": {
+    "total": 47,
+    "system": 37,
+    "custom": 10
+  },
+  "sampleData": {
+    "created_by__r": {
+      "picAddr": "",
+      "description": "",
+      "dept": "1000",
+      "supervisorId": "1000",
+      "empNum": "00022",
+      "modifyTime": 1753755166813,
+      "post": "",
+      "createTime": 1752131337130,
+      "phone": "",
+      "name": "楊佳玲",
+      "nickname": "楊佳玲",
+      "tenantId": "781014",
+      "id": "1090",
+      "email": "lynn@yes-ceramics.com",
+      "status": 0
+    },
+    "owner_department_id": "1006",
+    "total_num": 3277,
+    "owner_department": "業務二部",
+    "searchAfterId": [
+      "1754042605741",
+      "1754042605773839",
+      "6874b50fd748ab0001960018"
+    ],
+    "field_k7e6q__c__r": "勝興-忠孝段",
+    "lock_status": "0",
+    "data_own_department__r": {
+      "deptName": "業務二部",
+      "leaderUserId": "1000",
+      "deptId": "1006",
+      "deptType": "dept",
+      "parentId": "999999",
+      "status": 0
+    },
+    "create_time": 1752478991524,
+    "field_1P96q__c__r": "勝興-忠孝段-2024",
+    "field_npLvn__c__relation_ids": "688c8f7d5450af00013c7fce",
+    "version": "3",
+    "created_by": [
+      "FSUID_BDF4911AC3ADCD331A26BDD4550DB6C0"
+    ],
+    "relevant_team": [
+      {
+        "teamMemberEmployee": [
+          "FSUID_303D4E189251A699407AA8A9F42B0D02"
+        ],
+        "teamMemberType": "0",
+        "teamMemberRole": "1",
+        "teamMemberPermissionType": "2",
+        "teamMemberDeptCascade": "0"
+      }
+    ],
+    "data_own_department": [
+      "1006"
+    ],
+    "name": "25-07-14-3553",
+    "field_i2Q1g__c": "18.22",
+    "_id": "6874b50fd748ab0001960018",
+    "data_own_department__l": [
+      {
+        "parentId": "999999",
+        "deptId": "1006",
+        "deptName": "業務二部",
+        "leaderUserId": "1000",
+        "status": 0,
+        "deptType": "dept"
+      }
+    ],
+    "field_WD7k1__c": "C",
+    "field_npLvn__c": "688c8f7d5450af00013c7fce",
+    "field_dxr31__c__r": "工地",
+    "lock_status__r": "未锁定",
+    "is_deleted": false,
+    "owner__l": [
+      {
+        "id": "1072",
+        "tenantId": "781014",
+        "name": "楊凱中(已停用)",
+        "picAddr": "",
+        "email": "",
+        "nickname": "楊凱中(已停用)",
+        "supervisorId": "1000",
+        "phone": "",
+        "description": "",
+        "status": 1,
+        "createTime": 1710120403898,
+        "modifyTime": 1744858610244,
+        "dept": "1006",
+        "post": "",
+        "empNum": "00009"
+      }
+    ],
+    "field_npLvn__c__r": "勝興-忠孝段-樣品層-築愛家",
+    "relevant_team__r": "楊凱中(已停用)",
+    "field_23Z5i__c__r": "準備中",
+    "owner__r": {
+      "picAddr": "",
+      "description": "",
+      "dept": "1006",
+      "supervisorId": "1000",
+      "empNum": "00009",
+      "modifyTime": 1744858610244,
+      "post": "",
+      "createTime": 1710120403898,
+      "phone": "",
+      "name": "楊凱中(已停用)",
+      "nickname": "楊凱中(已停用)",
+      "tenantId": "781014",
+      "id": "1072",
+      "email": "",
+      "status": 1
+    },
+    "owner": [
+      "FSUID_303D4E189251A699407AA8A9F42B0D02"
+    ],
+    "field_k7e6q__c__relation_ids": "68746b9e5a99e00001446880",
+    "last_modified_time": 1754042605741,
+    "life_status": "normal",
+    "last_modified_by__l": [
+      {
+        "id": "1090",
+        "tenantId": "781014",
+        "name": "楊佳玲",
+        "picAddr": "",
+        "email": "lynn@yes-ceramics.com",
+        "nickname": "楊佳玲",
+        "supervisorId": "1000",
+        "phone": "",
+        "description": "",
+        "status": 0,
+        "createTime": 1752131337130,
+        "modifyTime": 1753755166813,
+        "dept": "1000",
+        "post": "",
+        "empNum": "00022"
+      }
+    ],
+    "created_by__l": [
+      {
+        "id": "1090",
+        "tenantId": "781014",
+        "name": "楊佳玲",
+        "picAddr": "",
+        "email": "lynn@yes-ceramics.com",
+        "nickname": "楊佳玲",
+        "supervisorId": "1000",
+        "phone": "",
+        "description": "",
+        "status": 0,
+        "createTime": 1752131337130,
+        "modifyTime": 1753755166813,
+        "dept": "1000",
+        "post": "",
+        "empNum": "00022"
+      }
+    ],
+    "field_k7e6q__c": "68746b9e5a99e00001446880",
+    "last_modified_by": [
+      "FSUID_BDF4911AC3ADCD331A26BDD4550DB6C0"
+    ],
+    "field_Q6Svh__c": "2.0",
+    "record_type": "default__c",
+    "last_modified_by__r": {
+      "picAddr": "",
+      "description": "",
+      "dept": "1000",
+      "supervisorId": "1000",
+      "empNum": "00022",
+      "modifyTime": 1753755166813,
+      "post": "",
+      "createTime": 1752131337130,
+      "phone": "",
+      "name": "楊佳玲",
+      "nickname": "楊佳玲",
+      "tenantId": "781014",
+      "id": "1090",
+      "email": "lynn@yes-ceramics.com",
+      "status": 0
+    },
+    "field_23Z5i__c": [
+      "t8740Rp11"
+    ],
+    "field_XuJP2__c": "C1",
+    "life_status__r": "正常",
+    "field_1P96q__c": "651e2befd830ad00013cfcf7",
+    "field_1P96q__c__relation_ids": "651e2befd830ad00013cfcf7",
+    "field_tXAko__c": "18.22",
+    "field_dxr31__c": "option1"
+  }
+}

@@ -1,0 +1,679 @@
+{
+  "/api/field-sync/NewOpportunityObj/status": {
+    "error": "Not Found"
+  },
+  "/api/field-sync/objects/NewOpportunityObj": {
+    "error": "Not Found"
+  },
+  "/api/sync/objects": {
+    "error": "Not Found"
+  },
+  "/api/objects": {
+    "error": "Not Found"
+  },
+  "/api/field-sync": {
+    "error": "Not Found"
+  },
+  "field-sync-trigger": {
+    "error": "Not Found"
+  },
+  "schema-after-sync": {
+    "success": true,
+    "data": {
+      "objectApiName": "NewOpportunityObj",
+      "objectDisplayName": "商機",
+      "fieldCount": 81,
+      "fields": [
+        {
+          "apiName": "lock_rule",
+          "label": "锁定规则",
+          "dataType": "SYSTEM",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "close_date",
+          "label": "預計成交日期",
+          "dataType": "DATE",
+          "required": true,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_n4qm3__c",
+          "label": "預計拆架日",
+          "dataType": "DATE",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "extend_obj_data_id",
+          "label": "extend_obj_data_id",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "cost_time",
+          "label": "结单周期",
+          "dataType": "FORMULA",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "life_status_before_invalid",
+          "label": "作废前生命状态",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_3e2B2__c",
+          "label": "GMAP定位",
+          "dataType": "URL",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "owner_department",
+          "label": "负责人主属部门",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_g927h__c",
+          "label": "維修管理表",
+          "dataType": "URL",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "opp_lines_sum",
+          "label": "产品合计",
+          "dataType": "STATISTIC",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_b196b__c",
+          "label": "備註",
+          "dataType": "TEXTAREA",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "tenant_id",
+          "label": "tenant_id",
+          "dataType": "TEXT",
+          "required": true,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "discount_sum",
+          "label": "折扣后金额",
+          "dataType": "STATISTIC",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "extend_obj_data_id_original",
+          "label": "extend_obj_data_id_original",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "final_amount",
+          "label": "成交金额",
+          "dataType": "CURRENCY",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "deal_status",
+          "label": "成单状态",
+          "dataType": "REFERENCE",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "close_result",
+          "label": "赢单原因",
+          "dataType": "MULTISELECT",
+          "required": false,
+          "description": "品牌影响力;渠道关系稳定;价格优势;售前服务专业;产品竞争力强;实施周期符合预期",
+          "options": "品牌影响力;渠道关系稳定;价格优势;售前服务专业;产品竞争力强;实施周期符合预期"
+        },
+        {
+          "apiName": "lock_status",
+          "label": "锁定状态",
+          "dataType": "SELECT",
+          "required": false,
+          "description": "未锁定;锁定",
+          "options": "未锁定;锁定"
+        },
+        {
+          "apiName": "origin_source",
+          "label": "数据来源",
+          "dataType": "SELECT",
+          "required": false,
+          "description": "数据同步",
+          "options": "数据同步"
+        },
+        {
+          "apiName": "lock_user",
+          "label": "加锁人",
+          "dataType": "USER",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "is_deleted",
+          "label": "is_deleted",
+          "dataType": "BOOLEAN",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "competitor",
+          "label": "竞争对手",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "object_describe_api_name",
+          "label": "object_describe_api_name",
+          "dataType": "TEXT",
+          "required": true,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "industry",
+          "label": "所属行业",
+          "dataType": "LOOKUP",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "expected_product_amount",
+          "label": "预计产品金额",
+          "dataType": "CURRENCY",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "area_location__r",
+          "label": "區位",
+          "dataType": "LOOKUP",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_h3B29__c",
+          "label": "樣品屋地址",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "opportunity_type",
+          "label": "商机类型",
+          "dataType": "SELECT",
+          "required": false,
+          "description": "新签;续签;增购",
+          "options": "新签;续签;增购"
+        },
+        {
+          "apiName": "out_owner",
+          "label": "外部负责人",
+          "dataType": "USER",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "loss_reason",
+          "label": "丢单原因",
+          "dataType": "MULTISELECT",
+          "required": false,
+          "description": "价格太高;售后支撑不满意;实施周期太长;暂时放弃;产品问题;其他;运营过程不满意",
+          "options": "价格太高;售后支撑不满意;实施周期太长;暂时放弃;产品问题;其他;运营过程不满意"
+        },
+        {
+          "apiName": "sales_team",
+          "label": "销售团队",
+          "dataType": "LOOKUP",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "owner",
+          "label": "负责人",
+          "dataType": "USER",
+          "required": true,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "quote_status",
+          "label": "报价状态",
+          "dataType": "SELECT",
+          "required": false,
+          "description": "初次报价;正在优化报价;完成报价;报价已被接受",
+          "options": "初次报价;正在优化报价;完成报价;报价已被接受"
+        },
+        {
+          "apiName": "package",
+          "label": "package",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "create_time",
+          "label": "创建时间",
+          "dataType": "DATETIME",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "version",
+          "label": "version",
+          "dataType": "NUMBER",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "created_by",
+          "label": "创建人",
+          "dataType": "USER",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "relevant_team",
+          "label": "相关团队",
+          "dataType": "EMBEDDED_LIST",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "data_own_department",
+          "label": "归属部门",
+          "dataType": "DEPARTMENT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "discount_amount",
+          "label": "折扣金额",
+          "dataType": "CURRENCY",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_n29iL__c",
+          "label": "地址",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "budget",
+          "label": "项目预算",
+          "dataType": "SELECT",
+          "required": false,
+          "description": "0-1万;1-5万;5-10万;10-30万;30-100万;100万以上",
+          "options": "0-1万;1-5万;5-10万;10-30万;30-100万;100万以上"
+        },
+        {
+          "apiName": "win_probability",
+          "label": "赢单概率(%)",
+          "dataType": "NUMBER",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "opportunity_stage",
+          "label": "商机阶段",
+          "dataType": "SELECT",
+          "required": false,
+          "description": "潜在客户;客户认可;需求确认;方案报价;商务谈���;合同签订",
+          "options": "潜在客户;客户认可;需求确认;方案报价;商务谈判;合同签订"
+        },
+        {
+          "apiName": "amount",
+          "label": "商机金额",
+          "dataType": "CURRENCY",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "custom_amount_5",
+          "label": "不含税金额",
+          "dataType": "CURRENCY",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "lead_source",
+          "label": "商机来源",
+          "dataType": "SELECT",
+          "required": false,
+          "description": "电话销售;上门拜访;客户推荐;主动来电;网站;广告;展会;其他",
+          "options": "电话销售;上门拜访;客户推荐;主动来电;网站;广告;展会;其他"
+        },
+        {
+          "apiName": "opportunity_status",
+          "label": "商机状态",
+          "dataType": "SELECT",
+          "required": false,
+          "description": "实施中;赢单;输单;无效商机",
+          "options": "实施中;赢单;输单;无效商机"
+        },
+        {
+          "apiName": "real_close_date",
+          "label": "实际成交日期",
+          "dataType": "DATE",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "name",
+          "label": "商机名",
+          "dataType": "TEXT",
+          "required": true,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "_id",
+          "label": "_id",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_qF5U6__c",
+          "label": "開工日期",
+          "dataType": "DATE",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "last_modified_time",
+          "label": "最后修改时间",
+          "dataType": "DATETIME",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "accountId",
+          "label": "客户名",
+          "dataType": "MASTER_DETAIL",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "life_status",
+          "label": "生命状态",
+          "dataType": "SELECT",
+          "required": false,
+          "description": "未生效;审核中;正常;变更中;作废",
+          "options": "未生效;审核中;正常;变更中;作废"
+        },
+        {
+          "apiName": "last_modified_by",
+          "label": "最后修改人",
+          "dataType": "USER",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "out_tenant_id",
+          "label": "外部企业",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "record_type",
+          "label": "业务类型",
+          "dataType": "SYSTEM",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "lock_time",
+          "label": "加锁时间",
+          "dataType": "DATETIME",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "contactId",
+          "label": "联系人",
+          "dataType": "LOOKUP",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_e0dVR__c",
+          "label": "開架日期",
+          "dataType": "DATE",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "project_customer_name__c",
+          "label": "專案案名",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "valid_time",
+          "label": "生效时间",
+          "dataType": "DATETIME",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "invalid_time",
+          "label": "作废时间",
+          "dataType": "DATETIME",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "quotation_number",
+          "label": "报价单号",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_D4ph1__c",
+          "label": "建設公司",
+          "dataType": "LOOKUP",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "custom_amount_4",
+          "label": "税金",
+          "dataType": "CURRENCY",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "source_object_id",
+          "label": "原始业务ID",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "external_id_for_sync",
+          "label": "外部系统唯一ID",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "owner_department_id",
+          "label": "负责人主属部门",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_8EBz1__c",
+          "label": "是否有浴櫃",
+          "dataType": "BOOLEAN",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_l47x8__c",
+          "label": "浴櫃價格",
+          "dataType": "CURRENCY",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_fhLzm__c",
+          "label": "開始搬建材日期",
+          "dataType": "DATE",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_3xJW8__c",
+          "label": "進度管理表",
+          "dataType": "URL",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_JAAyi__c",
+          "label": "聯絡人地址",
+          "dataType": "TEXT",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_z89V3__c",
+          "label": "上架日期",
+          "dataType": "DATE",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_i5Y0u__c",
+          "label": "照片",
+          "dataType": "IMAGE",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "order_by",
+          "label": "order_by",
+          "dataType": "NUMBER",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_uK83z__c",
+          "label": "施工坪數",
+          "dataType": "NUMBER",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "field_v5z8u__c",
+          "label": "合約金額",
+          "dataType": "CURRENCY",
+          "required": false,
+          "description": "",
+          "options": ""
+        },
+        {
+          "apiName": "cost_type__c",
+          "label": "單價類型",
+          "dataType": "SELECT",
+          "required": false,
+          "description": "坪數;數量",
+          "options": "坪數;數量"
+        }
+      ],
+      "source": "predefined"
+    }
+  }
+}

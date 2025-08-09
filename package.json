@@ -1,0 +1,23 @@
+{
+  "name": "fx-crm-sync",
+  "version": "1.0.0",
+  "description": "紛享銷客CRM到Cloudflare D1同步系統",
+  "private": true,
+  "workspaces": [
+    "workers/*",
+    "web-app"
+  ],
+  "scripts": {
+    "dev": "npm run dev:worker & npm run dev:web",
+    "dev:worker": "cd workers && wrangler dev",
+    "dev:web": "cd web-app && npm run dev",
+    "deploy": "npm run deploy:worker && npm run deploy:web",
+    "deploy:worker": "cd workers && wrangler deploy",
+    "deploy:web": "cd web-app && npm run build && wrangler pages deploy",
+    "db:init": "node scripts/init-database.js",
+    "sync:test": "node scripts/test-sync.js"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

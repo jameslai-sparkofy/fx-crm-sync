@@ -1,0 +1,52 @@
+{
+  "timestamp": "2025-08-09T11:37:31.993Z",
+  "url": "https://fx-crm-sync.lai-jameslai.workers.dev/",
+  "tests": [
+    {
+      "name": "Main page fetch",
+      "status": "PASS",
+      "details": "Page content length: 54879 characters"
+    },
+    {
+      "name": "Opportunity object presence",
+      "status": "PASS",
+      "details": "Opportunity references: Found"
+    },
+    {
+      "name": "Data source verification",
+      "status": "FAIL",
+      "details": "Database: Found, Predefined: Found"
+    },
+    {
+      "name": "Fake field \"浴櫃價格\" removal",
+      "status": "PASS",
+      "details": "Fake field \"浴櫃價格\": Successfully removed"
+    },
+    {
+      "name": "Specific fake field IDs removal",
+      "status": "PASS",
+      "details": "field_l47x8__c: Removed, field_8EBz1__c: Removed"
+    },
+    {
+      "name": "Field count verification",
+      "status": "WARN",
+      "details": "Found 0 unique fields (expected around 63). Fields: "
+    },
+    {
+      "name": "API objects endpoint",
+      "status": "PASS",
+      "details": "API response: Valid JSON with 1 objects"
+    },
+    {
+      "name": "Admin page access",
+      "status": "PASS",
+      "details": "Admin page content length: 54879 characters"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 1,
+    "total": 8,
+    "warnings": 1
+  }
+}

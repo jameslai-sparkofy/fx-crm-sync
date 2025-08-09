@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-08-09T10:54:26.066Z",
+  "before": {
+    "source": "predefined",
+    "fieldCount": 81,
+    "hasBathroomCabinet": true
+  },
+  "syncResponse": {
+    "error": "Not Found"
+  },
+  "after": {
+    "source": "predefined",
+    "fieldCount": 81,
+    "hasBathroomCabinet": true
+  },
+  "summary": {
+    "dataSourceChanged": false,
+    "nowUsingDatabase": false,
+    "bathroomCabinetRemoved": false,
+    "fieldCountChanged": false
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "NewOpportunityObj": {
+    "source": "predefined",
+    "fieldCount": 81,
+    "isDatabaseSource": false
+  },
+  "object_8W9cb__c": {
+    "source": "predefined",
+    "fieldCount": 86,
+    "isDatabaseSource": false
+  },
+  "SupplierObj": {
+    "source": "predefined",
+    "fieldCount": 55,
+    "isDatabaseSource": false
+  }
+}

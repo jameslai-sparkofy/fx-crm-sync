@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試對象管理</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>測試對象管理 API</h1>
+    
+    <button onclick="testAPI()">載入對象列表</button>
+    <button onclick="discoverObjects()">發現對象</button>
+    
+    <div id="result" style="margin-top: 20px;">
+        <h2>結果：</h2>
+        <pre id="output" style="background: #f5f5f5; padding: 10px; overflow-x: auto;"></pre>
+    </div>
+    
+    <div id="objects" style="margin-top: 20px;">
+        <h2>標準對象：</h2>
+        <ul id="standardList"></ul>
+        
+        <h2>自定義對象：</h2>
+        <ul id="customList"></ul>
+    </div>
+    
+    <script>
+        const API_BASE = 'https://fx-crm-sync.lai-jameslai.workers.dev';
+        
+        async function testAPI() {
+            const output = document.getElementById('output');
+            const standardList = document.getElementById('standardList');
+            const customList = document.getElementById('customList');
+            
+            try {
+                output.textContent = '載入中...';
+                
+                const response = await axios.get(`${API_BASE}/api/objects`);
+                
+                output.textContent = JSON.stringify(response.data, null, 2);
+                
+                if (response.data.success) {
+                    // 清空列表
+                    standardList.innerHTML = '';
+                    customList.innerHTML = '';
+                    
+                    // 顯示標準對象
+                    response.data.data.defaultObjects.forEach(obj => {
+                        const li = document.createElement('li');
+                        li.textContent = `${obj.displayName} (${obj.apiName}) - ${obj.isSynced ? '已同步' : '未同步'}`;
+                        standardList.appendChild(li);
+                    });
+                    
+                    // 顯示自定義對象
+                    response.data.data.customObjects.forEach(obj => {
+                        const li = document.createElement('li');
+                        li.textContent = `${obj.displayName} (${obj.apiName}) - ${obj.isSynced ? '已同步' : '未同步'}`;
+                        customList.appendChild(li);
+                    });
+                }
+                
+            } catch (error) {
+                output.textContent = '錯誤: ' + error.message;
+                console.error('錯誤詳情:', error);
+            }
+        }
+        
+        async function discoverObjects() {
+            const output = document.getElementById('output');
+            
+            try {
+                output.textContent = '發現對象中...';
+                
+                const response = await axios.post(`${API_BASE}/api/objects/discover`);
+                
+                output.textContent = JSON.stringify(response.data, null, 2);
+                
+                if (response.data.success) {
+                    alert('發現完成！請重新載入對象列表。');
+                }
+                
+            } catch (error) {
+                output.textContent = '錯誤: ' + error.message;
+                console.error('錯誤詳情:', error);
+            }
+        }
+        
+        // 頁面載入時自動執行
+        window.onload = testAPI;
+    </script>
+</body>
+</html>

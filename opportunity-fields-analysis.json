@@ -1,0 +1,841 @@
+{
+  "objectApiName": "NewOpportunityObj",
+  "fields": [
+    {
+      "apiName": "account_id__r",
+      "isCustom": false,
+      "exampleValue": "勝美建設股份有限公司",
+      "dataType": "string"
+    },
+    {
+      "apiName": "cost_time",
+      "isCustom": false,
+      "exampleValue": "1898208000",
+      "dataType": "string"
+    },
+    {
+      "apiName": "sales_stage__r",
+      "isCustom": false,
+      "exampleValue": "贏單",
+      "dataType": "string"
+    },
+    {
+      "apiName": "owner_department_id",
+      "isCustom": false,
+      "exampleValue": "1003",
+      "dataType": "string"
+    },
+    {
+      "apiName": "searchAfterId",
+      "isCustom": false,
+      "exampleValue": [
+        "1754092250913",
+        "1754092250957931",
+        "650c09e8dc044f0001973eab"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "currentStageIndex",
+      "isCustom": false,
+      "exampleValue": 5,
+      "dataType": "number"
+    },
+    {
+      "apiName": "data_own_department__r",
+      "isCustom": false,
+      "exampleValue": {
+        "deptName": "管理部",
+        "leaderUserId": "1000",
+        "deptId": "1003",
+        "deptType": "dept",
+        "parentId": "999999",
+        "status": 0
+      },
+      "dataType": "object"
+    },
+    {
+      "apiName": "probability",
+      "isCustom": false,
+      "exampleValue": 100,
+      "dataType": "number"
+    },
+    {
+      "apiName": "field_rU4l5__c",
+      "isCustom": true,
+      "exampleValue": "勝美-育賢二期",
+      "dataType": "string"
+    },
+    {
+      "apiName": "version",
+      "isCustom": false,
+      "exampleValue": "10",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_SdEgv__c",
+      "isCustom": true,
+      "exampleValue": "磁磚及SPC",
+      "dataType": "string"
+    },
+    {
+      "apiName": "opp_discount",
+      "isCustom": false,
+      "exampleValue": 100,
+      "dataType": "number"
+    },
+    {
+      "apiName": "sales_process_id",
+      "isCustom": false,
+      "exampleValue": "64ec36f86815cf000178aec1",
+      "dataType": "string"
+    },
+    {
+      "apiName": "data_own_department__l",
+      "isCustom": false,
+      "exampleValue": [
+        {
+          "parentId": "999999",
+          "deptId": "1003",
+          "deptName": "管理部",
+          "leaderUserId": "1000",
+          "status": 0,
+          "deptType": "dept"
+        }
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "field_e8m3q__c",
+      "isCustom": true,
+      "exampleValue": "0",
+      "dataType": "string"
+    },
+    {
+      "apiName": "sales_status",
+      "isCustom": false,
+      "exampleValue": "2",
+      "dataType": "string"
+    },
+    {
+      "apiName": "sales_stage",
+      "isCustom": false,
+      "exampleValue": "5",
+      "dataType": "string"
+    },
+    {
+      "apiName": "probability_amount",
+      "isCustom": false,
+      "exampleValue": "21739535.00",
+      "dataType": "string"
+    },
+    {
+      "apiName": "sales_process_id__r",
+      "isCustom": false,
+      "exampleValue": "建案销售流程",
+      "dataType": "string"
+    },
+    {
+      "apiName": "sales_status__r",
+      "isCustom": false,
+      "exampleValue": "赢单",
+      "dataType": "string"
+    },
+    {
+      "apiName": "last_modified_time",
+      "isCustom": false,
+      "exampleValue": 1754092250913,
+      "dataType": "number"
+    },
+    {
+      "apiName": "field_UJ7fD__c",
+      "isCustom": true,
+      "exampleValue": "z1Dt429HO",
+      "dataType": "string"
+    },
+    {
+      "apiName": "life_status",
+      "isCustom": false,
+      "exampleValue": "normal",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_vE1Zn__c",
+      "isCustom": true,
+      "exampleValue": "0",
+      "dataType": "string"
+    },
+    {
+      "apiName": "account_id",
+      "isCustom": false,
+      "exampleValue": "6508f92086a6c8000190db97",
+      "dataType": "string"
+    },
+    {
+      "apiName": "account_id__relation_ids",
+      "isCustom": false,
+      "exampleValue": "6508f92086a6c8000190db97",
+      "dataType": "string"
+    },
+    {
+      "apiName": "close_date",
+      "isCustom": false,
+      "exampleValue": 1690214400000,
+      "dataType": "number"
+    },
+    {
+      "apiName": "extend_obj_data_id",
+      "isCustom": false,
+      "exampleValue": "650c09e9dc044f00019740d7",
+      "dataType": "string"
+    },
+    {
+      "apiName": "created_by__r",
+      "isCustom": false,
+      "exampleValue": {
+        "picAddr": "",
+        "description": "",
+        "dept": "1002",
+        "supervisorId": "1000",
+        "empNum": "00007",
+        "modifyTime": 1733371959326,
+        "post": "",
+        "createTime": 1694563790856,
+        "phone": "",
+        "name": "游媺琪",
+        "nickname": "游媺琪",
+        "tenantId": "781014",
+        "id": "1004",
+        "email": "",
+        "status": 0
+      },
+      "dataType": "object"
+    },
+    {
+      "apiName": "total_num",
+      "isCustom": false,
+      "exampleValue": 506,
+      "dataType": "number"
+    },
+    {
+      "apiName": "owner_department",
+      "isCustom": false,
+      "exampleValue": "管理部",
+      "dataType": "string"
+    },
+    {
+      "apiName": "opp_lines_sum",
+      "isCustom": false,
+      "exampleValue": "2096080100.00",
+      "dataType": "string"
+    },
+    {
+      "apiName": "lock_status",
+      "isCustom": false,
+      "exampleValue": "0",
+      "dataType": "string"
+    },
+    {
+      "apiName": "create_time",
+      "isCustom": false,
+      "exampleValue": 1695287785275,
+      "dataType": "number"
+    },
+    {
+      "apiName": "last_followed_time",
+      "isCustom": false,
+      "exampleValue": 1754092250373,
+      "dataType": "number"
+    },
+    {
+      "apiName": "created_by",
+      "isCustom": false,
+      "exampleValue": [
+        "FSUID_B36B3A413130F8D1A5A5AA7511511637"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "relevant_team",
+      "isCustom": false,
+      "exampleValue": [
+        {
+          "teamMemberEmployee": [
+            "FSUID_2912B37883F2BA01F765A4E4F62405C8"
+          ],
+          "teamMemberType": "0",
+          "teamMemberRole": "4",
+          "teamMemberPermissionType": "1",
+          "teamMemberDeptCascade": "0"
+        },
+        {
+          "teamMemberEmployee": [
+            "FSUID_F8E5C73533927249281F06800BC975AA"
+          ],
+          "teamMemberType": "2",
+          "teamMemberRole": "4",
+          "teamMemberPermissionType": "2",
+          "teamMemberDeptCascade": "0"
+        },
+        {
+          "teamMemberEmployee": [
+            "FSUID_F8E5C73533927249281F06800BC975AA"
+          ],
+          "teamMemberType": "2",
+          "teamMemberRole": "2",
+          "teamMemberPermissionType": "2",
+          "teamMemberDeptCascade": "0"
+        },
+        {
+          "teamMemberEmployee": [
+            "FSUID_41F0C048314D197A8EF38DB3FB4D6598"
+          ],
+          "teamMemberType": "0",
+          "teamMemberRole": "4",
+          "teamMemberPermissionType": "2",
+          "teamMemberDeptCascade": "0"
+        },
+        {
+          "teamMemberEmployee": [
+            "FSUID_B36B3A413130F8D1A5A5AA7511511637"
+          ],
+          "teamMemberType": "0",
+          "teamMemberRole": "4",
+          "teamMemberPermissionType": "2",
+          "teamMemberDeptCascade": "0"
+        },
+        {
+          "teamMemberEmployee": [
+            "FSUID_303D4E189251A699407AA8A9F42B0D02"
+          ],
+          "teamMemberType": "0",
+          "teamMemberRole": "4",
+          "teamMemberPermissionType": "1",
+          "teamMemberDeptCascade": "0"
+        },
+        {
+          "teamMemberEmployee": [
+            "FSUID_F8E5C73533927249281F06800BC975AA"
+          ],
+          "teamMemberType": "0",
+          "teamMemberRole": "1",
+          "teamMemberPermissionType": "2",
+          "teamMemberDeptCascade": "0"
+        },
+        {
+          "teamMemberEmployee": [
+            "FSUID_9FEC6F867473395A975900F3F9949242"
+          ],
+          "teamMemberType": "0",
+          "teamMemberRole": "4",
+          "teamMemberPermissionType": "2",
+          "teamMemberDeptCascade": "0"
+        }
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "data_own_department",
+      "isCustom": false,
+      "exampleValue": [
+        "1003"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "field_lmjjf__c",
+      "isCustom": true,
+      "exampleValue": "TvP3c4kMA",
+      "dataType": "string"
+    },
+    {
+      "apiName": "name",
+      "isCustom": false,
+      "exampleValue": "勝美-育賢二-2023",
+      "dataType": "string"
+    },
+    {
+      "apiName": "_id",
+      "isCustom": false,
+      "exampleValue": "650c09e8dc044f0001973eab",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_nI1xS__c",
+      "isCustom": true,
+      "exampleValue": "台中市太平區旱溪東路二段、太順路",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_UJ7fD__c__r",
+      "isCustom": false,
+      "exampleValue": "實體層",
+      "dataType": "string"
+    },
+    {
+      "apiName": "lock_status__r",
+      "isCustom": false,
+      "exampleValue": "未锁定",
+      "dataType": "string"
+    },
+    {
+      "apiName": "totalStageCount",
+      "isCustom": false,
+      "exampleValue": 5,
+      "dataType": "number"
+    },
+    {
+      "apiName": "is_deleted",
+      "isCustom": false,
+      "exampleValue": false,
+      "dataType": "boolean"
+    },
+    {
+      "apiName": "stg_changed_time",
+      "isCustom": false,
+      "exampleValue": 1697185975802,
+      "dataType": "number"
+    },
+    {
+      "apiName": "owner__l",
+      "isCustom": false,
+      "exampleValue": [
+        {
+          "id": "1000",
+          "tenantId": "781014",
+          "name": "賴俊穎",
+          "picAddr": "N_202310_05_4c8f70e1b83f488e99c8626b438418d1",
+          "email": "",
+          "nickname": "賴俊穎",
+          "phone": "",
+          "description": "",
+          "status": 0,
+          "createTime": 1693202085819,
+          "modifyTime": 1733371988316,
+          "dept": "1003",
+          "post": "",
+          "empNum": "00002"
+        }
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "relevant_team__r",
+      "isCustom": false,
+      "exampleValue": "游媺琪,賴俊穎,陳智琛,楊凱中(已停用),徐玉梅,黃明樑(已停用),...",
+      "dataType": "string"
+    },
+    {
+      "apiName": "owner__r",
+      "isCustom": false,
+      "exampleValue": {
+        "picAddr": "N_202310_05_4c8f70e1b83f488e99c8626b438418d1",
+        "description": "",
+        "dept": "1003",
+        "empNum": "00002",
+        "modifyTime": 1733371988316,
+        "post": "",
+        "createTime": 1693202085819,
+        "phone": "",
+        "name": "賴俊穎",
+        "nickname": "賴俊穎",
+        "tenantId": "781014",
+        "id": "1000",
+        "email": "",
+        "status": 0
+      },
+      "dataType": "object"
+    },
+    {
+      "apiName": "owner",
+      "isCustom": false,
+      "exampleValue": [
+        "FSUID_F8E5C73533927249281F06800BC975AA"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "amount",
+      "isCustom": false,
+      "exampleValue": "21739535.00",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_i32Uj__c",
+      "isCustom": true,
+      "exampleValue": "0",
+      "dataType": "string"
+    },
+    {
+      "apiName": "last_modified_by__l",
+      "isCustom": false,
+      "exampleValue": [
+        {
+          "id": "1086",
+          "tenantId": "781014",
+          "name": "陳智琛",
+          "picAddr": "",
+          "email": "ponknom@yes-ceramics.com",
+          "nickname": "陳智琛",
+          "supervisorId": "1000",
+          "phone": "",
+          "description": "",
+          "status": 0,
+          "createTime": 1733107682208,
+          "modifyTime": 1753953306424,
+          "dept": "1000",
+          "post": "",
+          "empNum": "00020"
+        }
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "created_by__l",
+      "isCustom": false,
+      "exampleValue": [
+        {
+          "id": "1004",
+          "tenantId": "781014",
+          "name": "游媺琪",
+          "picAddr": "",
+          "email": "",
+          "nickname": "游媺琪",
+          "supervisorId": "1000",
+          "phone": "",
+          "description": "",
+          "status": 0,
+          "createTime": 1694563790856,
+          "modifyTime": 1733371959326,
+          "dept": "1002",
+          "post": "",
+          "empNum": "00007"
+        }
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "field_5co25__c",
+      "isCustom": true,
+      "exampleValue": "0",
+      "dataType": "string"
+    },
+    {
+      "apiName": "last_modified_by",
+      "isCustom": false,
+      "exampleValue": [
+        "FSUID_9FEC6F867473395A975900F3F9949242"
+      ],
+      "dataType": "array"
+    },
+    {
+      "apiName": "record_type",
+      "isCustom": false,
+      "exampleValue": "default__c",
+      "dataType": "string"
+    },
+    {
+      "apiName": "last_modified_by__r",
+      "isCustom": false,
+      "exampleValue": {
+        "picAddr": "",
+        "description": "",
+        "dept": "1000",
+        "supervisorId": "1000",
+        "empNum": "00020",
+        "modifyTime": 1753953306424,
+        "post": "",
+        "createTime": 1733107682208,
+        "phone": "",
+        "name": "陳智琛",
+        "nickname": "陳智琛",
+        "tenantId": "781014",
+        "id": "1086",
+        "email": "ponknom@yes-ceramics.com",
+        "status": 0
+      },
+      "dataType": "object"
+    },
+    {
+      "apiName": "life_status__r",
+      "isCustom": false,
+      "exampleValue": "正常",
+      "dataType": "string"
+    },
+    {
+      "apiName": "field_lmjjf__c__r",
+      "isCustom": false,
+      "exampleValue": "高",
+      "dataType": "string"
+    }
+  ],
+  "summary": {
+    "total": 61,
+    "system": 52,
+    "custom": 9
+  },
+  "sampleData": {
+    "account_id__r": "勝美建設股份有限公司",
+    "cost_time": "1898208000",
+    "sales_stage__r": "贏單",
+    "owner_department_id": "1003",
+    "searchAfterId": [
+      "1754092250913",
+      "1754092250957931",
+      "650c09e8dc044f0001973eab"
+    ],
+    "currentStageIndex": 5,
+    "data_own_department__r": {
+      "deptName": "管理部",
+      "leaderUserId": "1000",
+      "deptId": "1003",
+      "deptType": "dept",
+      "parentId": "999999",
+      "status": 0
+    },
+    "probability": 100,
+    "field_rU4l5__c": "勝美-育賢二期",
+    "version": "10",
+    "field_SdEgv__c": "磁磚及SPC",
+    "opp_discount": 100,
+    "sales_process_id": "64ec36f86815cf000178aec1",
+    "data_own_department__l": [
+      {
+        "parentId": "999999",
+        "deptId": "1003",
+        "deptName": "管理部",
+        "leaderUserId": "1000",
+        "status": 0,
+        "deptType": "dept"
+      }
+    ],
+    "field_e8m3q__c": "0",
+    "sales_status": "2",
+    "sales_stage": "5",
+    "probability_amount": "21739535.00",
+    "sales_process_id__r": "建案销售流程",
+    "sales_status__r": "赢单",
+    "last_modified_time": 1754092250913,
+    "field_UJ7fD__c": "z1Dt429HO",
+    "life_status": "normal",
+    "field_vE1Zn__c": "0",
+    "account_id": "6508f92086a6c8000190db97",
+    "account_id__relation_ids": "6508f92086a6c8000190db97",
+    "close_date": 1690214400000,
+    "extend_obj_data_id": "650c09e9dc044f00019740d7",
+    "created_by__r": {
+      "picAddr": "",
+      "description": "",
+      "dept": "1002",
+      "supervisorId": "1000",
+      "empNum": "00007",
+      "modifyTime": 1733371959326,
+      "post": "",
+      "createTime": 1694563790856,
+      "phone": "",
+      "name": "游媺琪",
+      "nickname": "游媺琪",
+      "tenantId": "781014",
+      "id": "1004",
+      "email": "",
+      "status": 0
+    },
+    "total_num": 506,
+    "owner_department": "管理部",
+    "opp_lines_sum": "2096080100.00",
+    "lock_status": "0",
+    "create_time": 1695287785275,
+    "last_followed_time": 1754092250373,
+    "created_by": [
+      "FSUID_B36B3A413130F8D1A5A5AA7511511637"
+    ],
+    "relevant_team": [
+      {
+        "teamMemberEmployee": [
+          "FSUID_2912B37883F2BA01F765A4E4F62405C8"
+        ],
+        "teamMemberType": "0",
+        "teamMemberRole": "4",
+        "teamMemberPermissionType": "1",
+        "teamMemberDeptCascade": "0"
+      },
+      {
+        "teamMemberEmployee": [
+          "FSUID_F8E5C73533927249281F06800BC975AA"
+        ],
+        "teamMemberType": "2",
+        "teamMemberRole": "4",
+        "teamMemberPermissionType": "2",
+        "teamMemberDeptCascade": "0"
+      },
+      {
+        "teamMemberEmployee": [
+          "FSUID_F8E5C73533927249281F06800BC975AA"
+        ],
+        "teamMemberType": "2",
+        "teamMemberRole": "2",
+        "teamMemberPermissionType": "2",
+        "teamMemberDeptCascade": "0"
+      },
+      {
+        "teamMemberEmployee": [
+          "FSUID_41F0C048314D197A8EF38DB3FB4D6598"
+        ],
+        "teamMemberType": "0",
+        "teamMemberRole": "4",
+        "teamMemberPermissionType": "2",
+        "teamMemberDeptCascade": "0"
+      },
+      {
+        "teamMemberEmployee": [
+          "FSUID_B36B3A413130F8D1A5A5AA7511511637"
+        ],
+        "teamMemberType": "0",
+        "teamMemberRole": "4",
+        "teamMemberPermissionType": "2",
+        "teamMemberDeptCascade": "0"
+      },
+      {
+        "teamMemberEmployee": [
+          "FSUID_303D4E189251A699407AA8A9F42B0D02"
+        ],
+        "teamMemberType": "0",
+        "teamMemberRole": "4",
+        "teamMemberPermissionType": "1",
+        "teamMemberDeptCascade": "0"
+      },
+      {
+        "teamMemberEmployee": [
+          "FSUID_F8E5C73533927249281F06800BC975AA"
+        ],
+        "teamMemberType": "0",
+        "teamMemberRole": "1",
+        "teamMemberPermissionType": "2",
+        "teamMemberDeptCascade": "0"
+      },
+      {
+        "teamMemberEmployee": [
+          "FSUID_9FEC6F867473395A975900F3F9949242"
+        ],
+        "teamMemberType": "0",
+        "teamMemberRole": "4",
+        "teamMemberPermissionType": "2",
+        "teamMemberDeptCascade": "0"
+      }
+    ],
+    "data_own_department": [
+      "1003"
+    ],
+    "field_lmjjf__c": "TvP3c4kMA",
+    "name": "勝美-育賢二-2023",
+    "_id": "650c09e8dc044f0001973eab",
+    "field_nI1xS__c": "台中市太平區旱溪東路二段、太順路",
+    "field_UJ7fD__c__r": "實體層",
+    "lock_status__r": "未锁定",
+    "totalStageCount": 5,
+    "is_deleted": false,
+    "stg_changed_time": 1697185975802,
+    "owner__l": [
+      {
+        "id": "1000",
+        "tenantId": "781014",
+        "name": "賴俊穎",
+        "picAddr": "N_202310_05_4c8f70e1b83f488e99c8626b438418d1",
+        "email": "",
+        "nickname": "賴俊穎",
+        "phone": "",
+        "description": "",
+        "status": 0,
+        "createTime": 1693202085819,
+        "modifyTime": 1733371988316,
+        "dept": "1003",
+        "post": "",
+        "empNum": "00002"
+      }
+    ],
+    "relevant_team__r": "游媺琪,賴俊穎,陳智琛,楊凱中(已停用),徐玉梅,黃明樑(已停用),...",
+    "owner__r": {
+      "picAddr": "N_202310_05_4c8f70e1b83f488e99c8626b438418d1",
+      "description": "",
+      "dept": "1003",
+      "empNum": "00002",
+      "modifyTime": 1733371988316,
+      "post": "",
+      "createTime": 1693202085819,
+      "phone": "",
+      "name": "賴俊穎",
+      "nickname": "賴俊穎",
+      "tenantId": "781014",
+      "id": "1000",
+      "email": "",
+      "status": 0
+    },
+    "owner": [
+      "FSUID_F8E5C73533927249281F06800BC975AA"
+    ],
+    "amount": "21739535.00",
+    "field_i32Uj__c": "0",
+    "last_modified_by__l": [
+      {
+        "id": "1086",
+        "tenantId": "781014",
+        "name": "陳智琛",
+        "picAddr": "",
+        "email": "ponknom@yes-ceramics.com",
+        "nickname": "陳智琛",
+        "supervisorId": "1000",
+        "phone": "",
+        "description": "",
+        "status": 0,
+        "createTime": 1733107682208,
+        "modifyTime": 1753953306424,
+        "dept": "1000",
+        "post": "",
+        "empNum": "00020"
+      }
+    ],
+    "created_by__l": [
+      {
+        "id": "1004",
+        "tenantId": "781014",
+        "name": "游媺琪",
+        "picAddr": "",
+        "email": "",
+        "nickname": "游媺琪",
+        "supervisorId": "1000",
+        "phone": "",
+        "description": "",
+        "status": 0,
+        "createTime": 1694563790856,
+        "modifyTime": 1733371959326,
+        "dept": "1002",
+        "post": "",
+        "empNum": "00007"
+      }
+    ],
+    "field_5co25__c": "0",
+    "last_modified_by": [
+      "FSUID_9FEC6F867473395A975900F3F9949242"
+    ],
+    "record_type": "default__c",
+    "last_modified_by__r": {
+      "picAddr": "",
+      "description": "",
+      "dept": "1000",
+      "supervisorId": "1000",
+      "empNum": "00020",
+      "modifyTime": 1753953306424,
+      "post": "",
+      "createTime": 1733107682208,
+      "phone": "",
+      "name": "陳智琛",
+      "nickname": "陳智琛",
+      "tenantId": "781014",
+      "id": "1086",
+      "email": "ponknom@yes-ceramics.com",
+      "status": 0
+    },
+    "life_status__r": "正常",
+    "field_lmjjf__c__r": "高"
+  }
+}
