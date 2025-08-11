@@ -9,6 +9,7 @@
     "tail": "wrangler tail"
   },
   "dependencies": {
+    "cheerio": "^1.1.2",
     "itty-router": "^4.0.0",
     "puppeteer": "^24.16.0"
   },

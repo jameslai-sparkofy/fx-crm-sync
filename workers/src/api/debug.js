@@ -161,7 +161,7 @@ debugRoutes.get('/test-single-site', async (request) => {
             {
               field_name: 'life_status',
               operator: 'NEQ',
-              field_values: ['作废']
+              field_values: ['invalid']
             }
           ],
           orders: [{ fieldName: 'create_time', isAsc: 'false' }]

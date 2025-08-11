@@ -23,54 +23,12 @@ syncRoutes.post('/:objectApiName/start', async (request) => {
     
     let result;
     
-    // 使用動態同步的對象列表（有欄位不匹配問題的）
-    const dynamicObjects = {
-      'object_k1XqG__c': true,        // 維修單 (自定義)
-      'site_cabinet__c': true,        // 案場(浴櫃) (自定義)
-      'progress_management_announ__c': true  // 進度管理公告 (自定義)
-    };
+    // 檢查請求參數
+    const body = await request.json().catch(() => ({}));
     
-    // 根據對象類型執行不同的同步
-    if (dynamicObjects[objectApiName]) {
-      // 使用動態同步
-      const isCustom = objectApiName.endsWith('__c');
-      result = await dynamicSyncService.syncDynamicObject(objectApiName, isCustom);
-    } else {
-      // 使用原有的同步方法
-      switch (objectApiName) {
-        case 'NewOpportunityObj':
-          result = await dataSyncService.syncOpportunities();
-          break;
-          
-        case 'NewOpportunityContactsObj':
-          const contactsBody = await request.json().catch(() => ({}));
-          result = await dataSyncService.syncOpportunityContacts({ fullSync: contactsBody.fullSync });
-          break;
-          
-        case 'object_8W9cb__c':
-          // 檢查是否要求完整同步
-          const body = await request.json().catch(() => ({}));
-          result = await dataSyncService.syncSites({ fullSync: body.fullSync });
-          break;
-        
-        case 'object_50HJ8__c':
-          result = await dataSyncService.syncWorkers();
-          break;
-          
-        case 'SupplierObj':
-          result = await dataSyncService.syncSuppliers();
-          break;
-          
-        default:
-          return new Response(JSON.stringify({
-            success: false,
-            error: `不支持的對象類型: ${objectApiName}`
-          }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' }
-          });
-      }
-    }
+    // 所有對象都使用動態同步
+    const isCustom = objectApiName.endsWith('__c');
+    result = await dynamicSyncService.syncDynamicObject(objectApiName, isCustom, { fullSync: body.fullSync });
     
     return new Response(JSON.stringify({
       success: true,
@@ -113,49 +71,9 @@ syncRoutes.post('/:objectApiName/full', async (request) => {
     
     let result;
     
-    // 使用動態同步的對象列表
-    const dynamicObjects = {
-      'object_k1XqG__c': true,
-      'site_cabinet__c': true,
-      'progress_management_announ__c': true
-    };
-    
-    // 根據對象類型執行不同的同步（強制完整同步）
-    if (dynamicObjects[objectApiName]) {
-      const isCustom = objectApiName.endsWith('__c');
-      result = await dynamicSyncService.syncDynamicObject(objectApiName, isCustom, { fullSync: true });
-    } else {
-      switch (objectApiName) {
-        case 'NewOpportunityObj':
-          result = await dataSyncService.syncOpportunities({ fullSync: true });
-          break;
-          
-        case 'NewOpportunityContactsObj':
-          result = await dataSyncService.syncOpportunityContacts({ fullSync: true });
-          break;
-          
-        case 'object_8W9cb__c':
-          result = await dataSyncService.syncSites({ fullSync: true });
-          break;
-          
-        case 'object_50HJ8__c':
-          result = await dataSyncService.syncWorkers({ fullSync: true });
-          break;
-          
-        case 'SupplierObj':
-          result = await dataSyncService.syncSuppliers({ fullSync: true });
-          break;
-          
-        default:
-          return new Response(JSON.stringify({
-            success: false,
-            error: `不支持的對象類型: ${objectApiName}`
-          }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' }
-          });
-      }
-    }
+    // 所有對象都使用動態同步（強制完整同步）
+    const isCustom = objectApiName.endsWith('__c');
+    result = await dynamicSyncService.syncDynamicObject(objectApiName, isCustom, { fullSync: true });
     
     return new Response(JSON.stringify({
       success: true,

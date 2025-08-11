@@ -1,0 +1,28 @@
+{
+  "timestamp": "2025-08-10T00:10:51.954Z",
+  "pageStructure": {
+    "title": "FX CRM 同步管理系統"
+  },
+  "timeTravelFeatures": {
+    "tabExists": true,
+    "tabLabel": "時間旅行",
+    "databaseStats": {
+      "exists": false
+    },
+    "checkpointMarker": {
+      "exists": true,
+      "hasDescriptionInput": true,
+      "hasMarkButton": true,
+      "hasInfoAlert": true
+    },
+    "commandGenerator": {
+      "exists": false
+    },
+    "checkpointTable": {
+      "exists": false
+    }
+  },
+  "elements": [],
+  "scripts": [],
+  "errors": []
+}

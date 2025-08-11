@@ -1,0 +1,95 @@
+{
+  "timestamp": "2025-08-10T00:08:43.235Z",
+  "baseUrl": "https://fx-crm-sync.lai-jameslai.workers.dev",
+  "tests": [
+    {
+      "name": "首頁訪問",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev",
+      "statusCode": 200,
+      "success": true
+    },
+    {
+      "name": "時間旅行路徑測試: /",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev/",
+      "statusCode": 200,
+      "success": true,
+      "hasTimeTravelContent": true,
+      "pageTitle": "FX CRM 同步管理系統",
+      "savedFile": "timetravel-page-_.html"
+    },
+    {
+      "name": "時間旅行路徑測試: /admin",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev/admin",
+      "statusCode": 200,
+      "success": true,
+      "hasTimeTravelContent": true,
+      "pageTitle": "FX CRM 同步管理系統",
+      "savedFile": "timetravel-page-_admin.html"
+    },
+    {
+      "name": "時間旅行路徑測試: /#time-travel",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev/#time-travel",
+      "statusCode": 200,
+      "success": true,
+      "hasTimeTravelContent": true,
+      "pageTitle": "FX CRM 同步管理系統",
+      "savedFile": "timetravel-page-__time_travel.html"
+    },
+    {
+      "name": "時間旅行路徑測試: /?tab=time-travel",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev/?tab=time-travel",
+      "statusCode": 200,
+      "success": true,
+      "hasTimeTravelContent": true,
+      "pageTitle": "FX CRM 同步管理系統",
+      "savedFile": "timetravel-page-__tab_time_travel.html"
+    },
+    {
+      "name": "時間旅行路徑測試: /time-travel",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev/time-travel",
+      "statusCode": 404,
+      "success": false
+    },
+    {
+      "name": "時間旅行路徑測試: /timetravel",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev/timetravel",
+      "statusCode": 404,
+      "success": false
+    },
+    {
+      "name": "API 端點測試: /api/backup",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev/api/backup",
+      "statusCode": 404,
+      "success": true
+    },
+    {
+      "name": "API 端點測試: /api/schema",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev/api/schema",
+      "statusCode": 404,
+      "success": true
+    },
+    {
+      "name": "API 端點測試: /api/debug",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev/api/debug",
+      "statusCode": 404,
+      "success": true
+    },
+    {
+      "name": "API 端點測試: /admin/api/backup",
+      "url": "https://fx-crm-sync.lai-jameslai.workers.dev/admin/api/backup",
+      "statusCode": 404,
+      "success": true
+    }
+  ],
+  "elements": {
+    "資料庫統計卡片": [],
+    "標記檢查點卡片": [],
+    "時間旅行指令卡片": [],
+    "重要檢查點記錄表格": []
+  },
+  "errors": [],
+  "analysis": {
+    "homepageTitle": "FX CRM 同步管理系統",
+    "timeTravelLinks": []
+  }
+}

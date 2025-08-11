@@ -145,7 +145,7 @@ export class BidirectionalSyncService {
         {
           field_name: 'life_status',
           operator: 'NEQ', 
-          field_values: ['作废']
+          field_values: ['invalid']
         }
       ];
       

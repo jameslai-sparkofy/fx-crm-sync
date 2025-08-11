@@ -51,7 +51,7 @@ export class DataSyncService {
         {
           field_name: 'life_status',
           operator: 'NEQ',
-          field_values: ['作废']
+          field_values: ['invalid']
         }
       ];
       
@@ -176,7 +176,7 @@ export class DataSyncService {
         {
           field_name: 'life_status',
           operator: 'NEQ',
-          field_values: ['作废']
+          field_values: ['invalid']
         }
       ];
       
@@ -342,7 +342,7 @@ export class DataSyncService {
       const filters = [{
         field_name: 'life_status',
         operator: 'NEQ',
-        field_values: ['作废']
+        field_values: ['invalid']
       }];
       
       if (lastSyncTime) {
@@ -444,7 +444,7 @@ export class DataSyncService {
       const filters = [{
         field_name: 'life_status',
         operator: 'NEQ',
-        field_values: ['作废']
+        field_values: ['invalid']
       }];
       
       if (lastSyncTime) {
@@ -546,7 +546,7 @@ export class DataSyncService {
       const filters = [{
         field_name: 'life_status',
         operator: 'NEQ',
-        field_values: ['作废']
+        field_values: ['invalid']
       }];
       
       if (lastSyncTime) {
@@ -873,7 +873,7 @@ export class DataSyncService {
         {
           field_name: 'life_status',
           operator: 'NEQ',
-          field_values: ['作废']
+          field_values: ['invalid']
         }
       ];
       
@@ -1008,7 +1008,7 @@ export class DataSyncService {
       {
         field_name: 'life_status',
         operator: 'NEQ',
-        field_values: ['作废']
+        field_values: ['invalid']
       }
     ];
     
@@ -1086,7 +1086,7 @@ export class DataSyncService {
               {
                 field_name: 'life_status',
                 operator: 'NEQ',
-                field_values: ['作废']
+                field_values: ['invalid']
               }
             ],
             orders: [{ fieldName: 'last_modified_time', isAsc: false }]
@@ -1131,7 +1131,7 @@ export class DataSyncService {
       {
         field_name: 'life_status',
         operator: 'NEQ',
-        field_values: ['作废']
+        field_values: ['invalid']
       }
     ];
     
@@ -1198,7 +1198,7 @@ export class DataSyncService {
       {
         field_name: 'life_status',
         operator: 'NEQ',
-        field_values: ['作废']
+        field_values: ['invalid']
       }
     ];
     
@@ -1265,7 +1265,7 @@ export class DataSyncService {
       {
         field_name: 'life_status',
         operator: 'NEQ',
-        field_values: ['作废']
+        field_values: ['invalid']
       }
     ];
     
@@ -1332,7 +1332,7 @@ export class DataSyncService {
       {
         field_name: 'life_status',
         operator: 'NEQ',
-        field_values: ['作废']
+        field_values: ['invalid']
       }
     ];
     
@@ -1399,7 +1399,7 @@ export class DataSyncService {
       {
         field_name: 'life_status',
         operator: 'NEQ',
-        field_values: ['作废']
+        field_values: ['invalid']
       }
     ];
     
@@ -1466,7 +1466,7 @@ export class DataSyncService {
       {
         field_name: 'life_status',
         operator: 'NEQ',
-        field_values: ['作废']
+        field_values: ['invalid']
       }
     ];
     

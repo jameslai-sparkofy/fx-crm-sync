@@ -8,7 +8,11 @@ import { syncRoutes } from './sync.js';
 import { debugRoutes } from './debug.js';
 import { webhookRoutes } from './webhook.js';
 import { crudRoutes } from './crud.js';
-import { adminHTMLClean } from '../admin/admin-html-clean.js';
+import { backupRoutes } from './backup.js';
+import { adminHTML } from '../admin/admin-html.js';
+import { adminHTMLDebug } from '../admin/admin-html-debug.js';
+import { adminHTMLTest } from '../admin/admin-html-test.js';
+import { adminHTMLReproduce } from '../admin/admin-html-reproduce.js';
 
 const router = Router();
 
@@ -26,13 +30,31 @@ router.options('*', () => {
 
 // Admin UI routes
 router.get('/', () => {
-  return new Response(adminHTMLClean, {
+  return new Response(adminHTML, {
     headers: { 'Content-Type': 'text/html; charset=utf-8' }
   });
 });
 
 router.get('/admin', () => {
-  return new Response(adminHTMLClean, {
+  return new Response(adminHTML, {
+    headers: { 'Content-Type': 'text/html; charset=utf-8' }
+  });
+});
+
+router.get('/debug', () => {
+  return new Response(adminHTMLDebug, {
+    headers: { 'Content-Type': 'text/html; charset=utf-8' }
+  });
+});
+
+router.get('/test', () => {
+  return new Response(adminHTMLTest, {
+    headers: { 'Content-Type': 'text/html; charset=utf-8' }
+  });
+});
+
+router.get('/reproduce', () => {
+  return new Response(adminHTMLReproduce, {
     headers: { 'Content-Type': 'text/html; charset=utf-8' }
   });
 });
@@ -46,6 +68,7 @@ router.all('/api/sync/*', syncRoutes.handle);
 router.all('/api/debug/*', debugRoutes.handle);
 router.all('/api/webhook/*', webhookRoutes.handle);
 router.all('/api/crud/*', crudRoutes.handle);
+router.all('/api/backup/*', backupRoutes.handle);
 
 // Health check
 router.get('/api/health', () => {

@@ -526,7 +526,7 @@ export const adminHTMLEnhanced = `<!DOCTYPE html>
         const { createApp } = Vue;
         const { ElMessage, ElMessageBox } = ElementPlus;
         
-        createApp({
+        const appConfig = {
             data() {
                 return {
                     activeTab: 'sync',
@@ -1051,7 +1051,21 @@ export const adminHTMLEnhanced = `<!DOCTYPE html>
                     }, 60000);
                 }
             }
-        }).use(ElementPlus).mount('#app');
+        });
+        
+        // 創建並掛載應用
+        const app = createApp(appConfig);
+        app.use(ElementPlus);
+        
+        // 註冊所有圖標
+        if (typeof ElementPlusIconsVue !== 'undefined') {
+            Object.keys(ElementPlusIconsVue).forEach(key => {
+                app.component(key, ElementPlusIconsVue[key]);
+            });
+        }
+        
+        app.mount('#app');
+        window.app = app;
     </script>
 </body>
 </html>`;
