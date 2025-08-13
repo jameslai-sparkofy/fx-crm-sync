@@ -9,10 +9,13 @@ import { debugRoutes } from './debug.js';
 import { webhookRoutes } from './webhook.js';
 import { crudRoutes } from './crud.js';
 import { backupRoutes } from './backup.js';
+import { handleEmployeesAPI } from './employees.js';
+import simpleEmployeesApi from './simple-employees.js';
 import { adminHTML } from '../admin/admin-html.js';
 import { adminHTMLDebug } from '../admin/admin-html-debug.js';
 import { adminHTMLTest } from '../admin/admin-html-test.js';
 import { adminHTMLReproduce } from '../admin/admin-html-reproduce.js';
+import { employeeManagementHTML } from '../admin/employee-management-html.js';
 
 const router = Router();
 
@@ -59,6 +62,13 @@ router.get('/reproduce', () => {
   });
 });
 
+// Employee management UI
+router.get('/admin/employees', () => {
+  return new Response(employeeManagementHTML, {
+    headers: { 'Content-Type': 'text/html; charset=utf-8' }
+  });
+});
+
 // API routes
 router.all('/api/objects/*', objectsEnhancedRoutes.handle);
 router.all('/api/objects', objectsEnhancedRoutes.handle);
@@ -69,6 +79,36 @@ router.all('/api/debug/*', debugRoutes.handle);
 router.all('/api/webhook/*', webhookRoutes.handle);
 router.all('/api/crud/*', crudRoutes.handle);
 router.all('/api/backup/*', backupRoutes.handle);
+
+// Employee API routes
+router.all('/api/employees/*', async (request) => {
+  const url = new URL(request.url);
+  const path = url.pathname;
+  return handleEmployeesAPI(request, request.env, path);
+});
+router.all('/api/employees', async (request) => {
+  const url = new URL(request.url);
+  const path = url.pathname;
+  return handleEmployeesAPI(request, request.env, path);
+});
+router.all('/api/departments/*', async (request) => {
+  const url = new URL(request.url);
+  const path = url.pathname;
+  return handleEmployeesAPI(request, request.env, path);
+});
+router.all('/api/departments', async (request) => {
+  const url = new URL(request.url);
+  const path = url.pathname;
+  return handleEmployeesAPI(request, request.env, path);
+});
+
+// Simple Employees API routes
+router.all('/api/simple-employees/*', async (request) => {
+  return simpleEmployeesApi.fetch(request, request.env);
+});
+router.all('/api/simple-employees', async (request) => {
+  return simpleEmployeesApi.fetch(request, request.env);
+});
 
 // Health check
 router.get('/api/health', () => {

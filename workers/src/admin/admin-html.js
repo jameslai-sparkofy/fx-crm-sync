@@ -19,7 +19,8 @@ export const adminHTML = `<!DOCTYPE html>
         .update-time { color: #909399; font-size: 14px; }
         .main-content { padding: 20px; }
         .stats-row { margin-bottom: 20px; }
-        .stat-card { text-align: center; }
+        .stat-card { text-align: center; transition: all 0.3s; }
+        .stat-card.clickable:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .stat-title { font-size: 14px; color: #909399; margin-bottom: 12px; }
         .stat-value { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
         .stat-value.primary { color: #409eff; }
@@ -57,6 +58,7 @@ export const adminHTML = `<!DOCTYPE html>
             <h1>紛享銷客 CRM 同步管理系統</h1>
             <div class="header-right">
                 <span class="update-time">最後更新: {{ lastUpdate }}</span>
+                <el-button type="success" @click="goToEmployees" icon="User">員工管理</el-button>
                 <el-button type="primary" @click="refreshData" :icon="RefreshIcon">重新載入</el-button>
             </div>
         </div>
@@ -65,7 +67,10 @@ export const adminHTML = `<!DOCTYPE html>
             <!-- Statistics Cards -->
             <el-row :gutter="20" class="stats-row">
                 <el-col :span="3" v-for="stat in objectStats" :key="stat.apiName">
-                    <el-card class="stat-card">
+                    <el-card class="stat-card" 
+                            :class="{ 'clickable': stat.apiName === 'employees_simple' }"
+                            @click="handleStatClick(stat.apiName)"
+                            style="cursor: pointer;">
                         <div class="stat-title">{{ stat.displayName }}</div>
                         <div class="stat-value" :class="stat.colorClass">{{ stat.count }}</div>
                         <div class="stat-subtitle">{{ stat.apiName }}</div>
@@ -660,6 +665,7 @@ export const adminHTML = `<!DOCTYPE html>
             methods: {
                 async loadDatabaseStats() {
                     try {
+                        // 載入CRM對象統計
                         const response = await fetch('/api/sync/database-stats');
                         const result = await response.json();
                         
@@ -671,6 +677,19 @@ export const adminHTML = `<!DOCTYPE html>
                                 count: table.recordCount,
                                 colorClass: this.getColorClass(table.apiName)
                             }));
+                        }
+                        
+                        // 載入員工統計
+                        const empResponse = await fetch('/api/simple-employees/stats');
+                        const empResult = await empResponse.json();
+                        
+                        if (empResult.success) {
+                            this.objectStats.push({
+                                displayName: '員工',
+                                apiName: 'employees_simple',
+                                count: empResult.data.total_employees || 0,
+                                colorClass: 'success'
+                            });
                         }
                     } catch (error) {
                         console.error('載入統計失敗:', error);
@@ -684,6 +703,7 @@ export const adminHTML = `<!DOCTYPE html>
                         'object_8W9cb__c': '案場(SPC)',
                         'object_k1XqG__c': '維修單',
                         'object_50HJ8__c': '工地師父',
+                        'employees_simple': '員工',
                         'SupplierObj': '供應商',
                         'site_cabinet__c': '案場(浴櫃)',
                         'progress_management_announ__c': '進度公告'
@@ -798,6 +818,16 @@ export const adminHTML = `<!DOCTYPE html>
                     this.lastUpdate = new Date().toLocaleString('zh-TW');
                     await this.loadStats();
                     ElMessage.success('資料已更新');
+                },
+                
+                goToEmployees() {
+                    window.open('/admin/employees', '_blank');
+                },
+                
+                handleStatClick(apiName) {
+                    if (apiName === 'employees_simple') {
+                        this.goToEmployees();
+                    }
                 },
                 
                 formatDate(timestamp) {
