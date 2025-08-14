@@ -34,7 +34,7 @@
 
 ### CLOUDFLARE_ACCOUNT_ID
 - **Name**: `CLOUDFLARE_ACCOUNT_ID`
-- **Value**: 你在步驟 2 獲得的 Account ID（應該是 `e3ad27bb8e2f2ef91c491f5dd3fbd802`）
+- **Value**: `4178e03ce554bc3867d9211cd225e665`
 
 ## 步驟 4: 觸發部署
 

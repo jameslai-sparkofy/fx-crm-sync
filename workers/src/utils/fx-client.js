@@ -418,7 +418,14 @@ export class FxClient {
         ...body
       };
       
-      console.log(`[FxClient] 數據查詢請求體:`, JSON.stringify(requestBody, null, 2));
+      // 對於更新操作，添加更詳細的日誌
+      if (endpoint.includes('/data/update')) {
+        console.log(`[FxClient] 🔴 更新API完整請求:`);
+        console.log(`[FxClient] URL: ${url}`);
+        console.log(`[FxClient] 請求體:`, JSON.stringify(requestBody, null, 2));
+      } else {
+        console.log(`[FxClient] 數據查詢請求體:`, JSON.stringify(requestBody, null, 2));
+      }
     }
 
     try {
@@ -430,13 +437,18 @@ export class FxClient {
 
       const data = await response.json();
       
-      console.log(`[FxClient] API 響應:`, {
-        endpoint,
-        errorCode: data.errorCode,
-        errorMessage: data.errorMessage,
-        dataCount: data.data?.dataList?.length || 0,
-        total: data.data?.total
-      });
+      // 對於更新操作，記錄完整響應
+      if (endpoint.includes('/data/update')) {
+        console.log(`[FxClient] 🔴 更新API完整響應:`, JSON.stringify(data, null, 2));
+      } else {
+        console.log(`[FxClient] API 響應:`, {
+          endpoint,
+          errorCode: data.errorCode,
+          errorMessage: data.errorMessage,
+          dataCount: data.data?.dataList?.length || 0,
+          total: data.data?.total
+        });
+      }
 
       // 檢查token是否過期
       if (data.errorCode === 401 || data.errorCode === 40001 || data.errorCode === 10001) {

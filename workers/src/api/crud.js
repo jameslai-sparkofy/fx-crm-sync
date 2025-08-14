@@ -97,6 +97,12 @@ crudRoutes.post('/:objectApiName', withAuth(async (request) => {
 /**
  * 更新記錄並同步到 CRM
  * PUT /api/crud/:objectApiName/:recordId
+ * 
+ * 重要：紛享銷客 API 格式要求
+ * - 必須使用 object_data 包裝更新數據
+ * - 記錄 ID 必須作為 _id 放在 object_data 內部
+ * - dataObjectApiName 也必須在 object_data 內部
+ * - 參考官方文檔：https://open.fxiaoke.com/wiki/
  */
 crudRoutes.put('/:objectApiName/:recordId', withAuth(async (request) => {
   const { env } = request;
@@ -110,10 +116,13 @@ crudRoutes.put('/:objectApiName/:recordId', withAuth(async (request) => {
     await fxClient.init();
     
     // 準備更新數據
+    // 使用官方文檔格式：object_data 包裝
     const updateData = {
-      dataObjectApiName: objectApiName,
-      objectDataId: recordId,
-      data: body
+      object_data: {
+        _id: recordId,  // ID 必須在 object_data 內部
+        dataObjectApiName: objectApiName,
+        ...body         // 展開用戶提供的更新字段
+      }
     };
     
     // 根據對象類型選擇正確的 API 端點
@@ -121,7 +130,10 @@ crudRoutes.put('/:objectApiName/:recordId', withAuth(async (request) => {
       '/cgi/crm/custom/v2/data/update' : 
       '/cgi/crm/v2/data/update';
     
-    // 調用 CRM API 更新記錄
+    console.log(`[CRUD] 更新記錄 - API路徑: ${apiPath}`);
+    console.log(`[CRUD] 更新請求數據:`, JSON.stringify({ data: updateData }, null, 2));
+    
+    // 調用 CRM API 更新記錄 - 使用正確的 object_data 格式
     const response = await fxClient.post(apiPath, { data: updateData });
     
     if (response.errorCode !== 0) {

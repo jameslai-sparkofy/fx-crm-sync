@@ -129,11 +129,12 @@ export class CrmWriteService {
     const isCustom = objectApiName.endsWith('__c');
     const apiPath = isCustom ? '/cgi/crm/custom/v2/data/update' : '/cgi/crm/v2/data/update';
     
+    // 使用官方文檔格式：object_data 包裝
     const response = await this.fxClient.post(apiPath, {
       data: {
-        dataObjectApiName: objectApiName,
-        data: {
+        object_data: {
           _id: objectId,
+          dataObjectApiName: objectApiName,
           ...this.formatDataForCrm(data)
         }
       }
