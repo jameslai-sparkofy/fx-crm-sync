@@ -1015,7 +1015,7 @@ export const adminHTML = `<!DOCTYPE html>
                         if (response.data.success) {
                             const stats = response.data.data;
                             ElMessage({
-                                message: `過去 24 小時：總同步 ${stats.summary.totalSyncs} 次，處理 ${stats.summary.totalRecords} 條記錄，成功 ${stats.summary.totalSuccess} 條，失敗 ${stats.summary.totalFailed} 條`,
+                                message: '過去 24 小時：總同步 ' + stats.summary.totalSyncs + ' 次，處理 ' + stats.summary.totalRecords + ' 條記錄，成功 ' + stats.summary.totalSuccess + ' 條，失敗 ' + stats.summary.totalFailed + ' 條',
                                 type: 'info',
                                 duration: 5000
                             });
