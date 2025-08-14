@@ -13,10 +13,52 @@ export const adminHTML = `<!DOCTYPE html>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; }
-        .header { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 0 20px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+        .header { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 0 20px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: relative; }
         .header h1 { font-size: 24px; color: #303133; }
         .header-right { display: flex; align-items: center; gap: 20px; }
         .update-time { color: #909399; font-size: 14px; }
+        
+        /* 環境標識 */
+        .env-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .env-badge.development {
+            background: #67c23a;
+            color: white;
+        }
+        .env-badge.staging {
+            background: #e6a23c;
+            color: white;
+        }
+        .env-badge.production {
+            background: #f56c6c;
+            color: white;
+        }
+        
+        /* 環境警告橫幅 */
+        .env-warning {
+            background: #f56c6c;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .env-warning.development {
+            background: #67c23a;
+        }
+        .env-warning.staging {
+            background: #e6a23c;
+        }
         .main-content { padding: 20px; }
         .stats-row { margin-bottom: 20px; }
         .stat-card { text-align: center; transition: all 0.3s; }
@@ -54,8 +96,21 @@ export const adminHTML = `<!DOCTYPE html>
 </head>
 <body>
     <div id="app">
+        <!-- 環境警告橫幅 -->
+        <div v-if="environment.environment" 
+             class="env-warning" 
+             :class="environment.environment">
+            {{ getEnvironmentText() }}
+        </div>
+        
         <div class="header">
             <h1>紛享銷客 CRM 同步管理系統</h1>
+            <!-- 環境標識徽章 -->
+            <div v-if="environment.environment" 
+                 class="env-badge" 
+                 :class="environment.environment">
+                {{ environment.environment }}
+            </div>
             <div class="header-right">
                 <span class="update-time">最後更新: {{ lastUpdate }}</span>
                 <el-button type="success" @click="goToEmployees" icon="User">員工管理</el-button>
@@ -600,6 +655,15 @@ export const adminHTML = `<!DOCTYPE html>
                     objectTab: 'standard',
                     fieldTab: 'system',
                     lastUpdate: new Date().toLocaleString('zh-TW'),
+                    environment: {
+                        environment: '',
+                        isDevelopment: false,
+                        isStaging: false,
+                        isProduction: false,
+                        debug: false,
+                        syncBatchSize: '',
+                        autoSync: false
+                    },
                     stats: {
                         opportunities: 0,
                         sites: 0,
@@ -650,6 +714,7 @@ export const adminHTML = `<!DOCTYPE html>
                 }
             },
             mounted() {
+                this.loadEnvironment();
                 this.loadStats();
                 this.loadDatabaseStats();
                 // 預先載入對象數據
@@ -972,6 +1037,29 @@ export const adminHTML = `<!DOCTYPE html>
                         console.error('載入欄位錯誤:', error);
                         ElMessage.error('載入欄位失敗: ' + error.message);
                     }
+                },
+                
+                // 載入環境信息
+                async loadEnvironment() {
+                    try {
+                        const response = await fetch('/api/environment');
+                        const result = await response.json();
+                        this.environment = result;
+                    } catch (error) {
+                        console.error('載入環境信息失敗:', error);
+                    }
+                },
+                
+                getEnvironmentText() {
+                    const env = this.environment.environment;
+                    if (env === 'development') {
+                        return '🔧 開發環境 - 本地測試模式';
+                    } else if (env === 'staging') {
+                        return '🧪 測試環境 - 整合測試模式';
+                    } else if (env === 'production') {
+                        return '⚠️ 生產環境 - 請謹慎操作！';
+                    }
+                    return '環境未設置';
                 },
                 
                 // Time Travel 方法

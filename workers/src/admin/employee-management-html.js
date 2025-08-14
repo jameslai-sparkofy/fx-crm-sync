@@ -677,9 +677,9 @@ export const employeeManagementHTML = `<!DOCTYPE html>
                             <div class="node-icon dept">🏢</div>
                             <div class="node-info">
                                 <div class="node-name">\${dept.name}</div>
-                                <div class="node-desc">\${employeesInDept.length} 位員工</div>
+                                <div class="node-desc">\${dept.id == 999999 ? \`\${employeeData.length} 位員工\` : \`\${employeesInDept.length} 位員工\`}</div>
                             </div>
-                            <div class="node-badge">\${employeesInDept.length}</div>
+                            <div class="node-badge">\${dept.id == 999999 ? employeeData.length : employeesInDept.length}</div>
                             \${dept.children && dept.children.length > 0 ? '<span class="expand-icon">▼</span>' : ''}
                         </div>
                         <div class="department-children" id="dept-\${dept.id}">

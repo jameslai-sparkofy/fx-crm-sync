@@ -1,167 +1,82 @@
-#!/usr/bin/env node
-/**
- * 完整同步案場(SPC)數據，包含所有欄位
- */
-
-require('dotenv').config();
+// 完整同步案場(SPC)數據
 const axios = require('axios');
 
-const baseUrl = 'https://open.fxiaoke.com';
-const credentials = {
-  appId: process.env.FX_APP_ID || 'FSAID_1320691',
-  appSecret: process.env.FX_APP_SECRET || 'ec63ff237c5c4a759be36d3a8fb7a3b4',
-  permanentCode: process.env.FX_PERMANENT_CODE || '899433A4A04A3B8CB1CC2183DA4B5B48'
-};
+const API_URL = 'https://fx-crm-sync-dev.lai-jameslai.workers.dev';
 
-async function getAccessToken() {
-  const response = await axios.post(`${baseUrl}/cgi/corpAccessToken/get/V2`, credentials);
-  if (response.data.errorCode !== 0) {
-    throw new Error(`獲取 token 失敗: ${response.data.errorMessage}`);
-  }
-  return {
-    corpId: response.data.corpId,
-    corpAccessToken: response.data.corpAccessToken
-  };
-}
-
-async function getCurrentUserId(corpId, accessToken) {
-  const response = await axios.post(`${baseUrl}/cgi/user/getByMobile`, {
-    corpId,
-    corpAccessToken: accessToken,
-    mobile: "17675662629"
-  });
-  if (response.data.errorCode !== 0) {
-    throw new Error(`獲取用戶 ID 失敗: ${response.data.errorMessage}`);
-  }
-  // 檢查返回的數據結構
-  if (!response.data.empList || response.data.empList.length === 0) {
-    console.log('Response:', JSON.stringify(response.data, null, 2));
-    throw new Error('無法獲取用戶數據');
-  }
-  return response.data.empList[0].openUserId;
-}
-
-async function syncSPCData() {
-  console.log('='.repeat(60));
-  console.log('開始同步案場(SPC)完整數據');
-  console.log('='.repeat(60));
-
-  try {
-    // 1. 獲取認證
-    console.log('\n1. 獲取訪問令牌...');
-    const { corpId, corpAccessToken } = await getAccessToken();
-    console.log('✅ 成功獲取訪問令牌');
-
-    // 2. 獲取用戶 ID
-    console.log('\n2. 獲取當前用戶 ID...');
-    const currentOpenUserId = await getCurrentUserId(corpId, corpAccessToken);
-    console.log(`✅ 當前用戶 ID: ${currentOpenUserId}`);
-
-    // 3. 查詢一條完整的 SPC 記錄
-    console.log('\n3. 獲取案場數據...');
-    const queryResponse = await axios.post(`${baseUrl}/cgi/crm/custom/v2/data/query`, {
-      corpId,
-      corpAccessToken,
-      currentOpenUserId,
-      data: {
-        dataObjectApiName: 'object_8W9cb__c',
-        search_query_info: {
-          limit: 5,
-          offset: 0,
-          filters: [
+async function syncSPC() {
+    console.log('🚀 開始同步案場(SPC)數據...');
+    console.log('目標：同步 4191 筆記錄');
+    console.log('=====================================\n');
+    
+    try {
+        // 1. 先檢查當前狀態
+        console.log('📊 檢查當前資料庫狀態...');
+        const statsResponse = await axios.get(`${API_URL}/api/sync/database-stats`);
+        const currentStats = statsResponse.data.data.tables.find(t => t.apiName === 'object_8W9cb__c');
+        console.log(`當前記錄數：${currentStats.recordCount}`);
+        console.log(`最後同步時間：${currentStats.lastSync}\n`);
+        
+        // 2. 執行完整同步
+        console.log('🔄 開始執行完整同步...');
+        console.log('這可能需要幾分鐘時間，請耐心等待...\n');
+        
+        const syncResponse = await axios.post(
+            `${API_URL}/api/sync/object_8W9cb__c/start`,
             {
-              field_name: 'life_status',
-              operator: 'NEQ',
-              field_values: ['作废']
-            }
-          ],
-          orders: [
+                fullSync: true,
+                batchSize: 500,  // 使用較大批次
+                maxBatches: 20   // 允許更多批次
+            },
             {
-              fieldName: 'last_modified_time',
-              isAsc: false
+                timeout: 300000,  // 5分鐘超時
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }
-          ]
-        }
-      }
-    });
-
-    if (queryResponse.data.errorCode !== 0) {
-      throw new Error(`查詢失敗: ${queryResponse.data.errorMessage}`);
-    }
-
-    const records = queryResponse.data.data.dataList;
-    console.log(`✅ 獲取到 ${records.length} 條記錄`);
-
-    // 4. 分析欄位
-    if (records.length > 0) {
-      const firstRecord = records[0];
-      console.log('\n4. 第一條記錄的完整欄位:');
-      console.log('-'.repeat(60));
-      
-      const fields = Object.keys(firstRecord).sort();
-      console.log(`總欄位數: ${fields.length}`);
-      
-      // 檢查關鍵欄位
-      const keyFields = [
-        'shift_time__c',
-        'field_3T38o__c',
-        'field_u1wpv__c',
-        'field_27g6n__c',
-        'field_23pFq__c',
-        'field_23Z5i__c',
-        'field_1P96q__c'
-      ];
-      
-      console.log('\n關鍵欄位檢查:');
-      keyFields.forEach(field => {
-        if (firstRecord[field] !== undefined) {
-          const value = firstRecord[field];
-          const displayValue = typeof value === 'object' ? 
-            JSON.stringify(value).substring(0, 50) : 
-            String(value).substring(0, 50);
-          console.log(`✅ ${field}: ${displayValue}`);
+        );
+        
+        if (syncResponse.data.success) {
+            const result = syncResponse.data.data;
+            console.log('✅ 同步完成！');
+            console.log('=====================================');
+            console.log(`同步記錄數：${result.syncedCount}`);
+            console.log(`總處理數：${result.totalProcessed}`);
+            console.log(`執行時間：${result.executionTime}`);
+            console.log(`是否還有更多：${result.hasMore ? '是' : '否'}`);
+            
+            if (result.errors && result.errors.length > 0) {
+                console.log('\n⚠️ 同步錯誤：');
+                result.errors.forEach(err => console.log(`  - ${err}`));
+            }
         } else {
-          console.log(`❌ ${field}: 未找到`);
+            console.error('❌ 同步失敗：', syncResponse.data.error);
         }
-      });
-      
-      // 顯示所有欄位名稱
-      console.log('\n所有欄位列表:');
-      fields.forEach((field, index) => {
-        console.log(`  ${index + 1}. ${field}`);
-      });
-      
-      // 準備同步到 D1
-      console.log('\n5. 準備同步到 D1 資料庫...');
-      console.log('調用 Worker API: https://fx-crm-sync.lai-jameslai.workers.dev/api/sync/object_8W9cb__c/batch');
-      
-      // 這裡可以調用 Worker API 來執行實際的同步
-      const syncResponse = await axios.post(
-        'https://fx-crm-sync.lai-jameslai.workers.dev/api/sync/object_8W9cb__c/batch',
-        {
-          records: records,
-          includeAllFields: true
+        
+        // 3. 再次檢查狀態
+        console.log('\n📊 檢查更新後的狀態...');
+        const finalStatsResponse = await axios.get(`${API_URL}/api/sync/database-stats`);
+        const finalStats = finalStatsResponse.data.data.tables.find(t => t.apiName === 'object_8W9cb__c');
+        console.log(`最終記錄數：${finalStats.recordCount}`);
+        
+        if (finalStats.recordCount < 4191) {
+            console.log(`\n⚠️ 記錄數少於預期 (4191)，差異：${4191 - finalStats.recordCount}`);
+            console.log('可能原因：');
+            console.log('  1. 部分記錄狀態為「作廢」被過濾');
+            console.log('  2. 同步未完成，需要繼續執行');
+        } else {
+            console.log('\n✅ 所有記錄同步成功！');
         }
-      );
-      
-      if (syncResponse.data.success) {
-        console.log(`✅ 成功同步 ${syncResponse.data.data.synced} 條記錄`);
-      } else {
-        console.log(`❌ 同步失敗: ${syncResponse.data.error}`);
-      }
+        
+    } catch (error) {
+        if (error.code === 'ECONNABORTED') {
+            console.error('❌ 同步超時！請重新執行腳本繼續同步。');
+        } else if (error.response) {
+            console.error('❌ API 錯誤：', error.response.data);
+        } else {
+            console.error('❌ 執行錯誤：', error.message);
+        }
     }
-
-  } catch (error) {
-    console.error('❌ 同步失敗:', error.message);
-    if (error.response) {
-      console.error('Response:', error.response.data);
-    }
-  }
-
-  console.log('\n' + '='.repeat(60));
-  console.log('同步任務完成');
-  console.log('='.repeat(60));
 }
 
 // 執行同步
-syncSPCData();
+syncSPC();

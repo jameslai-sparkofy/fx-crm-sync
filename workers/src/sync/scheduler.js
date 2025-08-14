@@ -6,13 +6,23 @@ import { DataSyncService } from './data-sync-service.js';
 import { SchemaSyncService } from './schema-sync.js';
 import { SchemaManager } from './schema-manager.js';
 import { ObjectDiscoveryService } from './object-discovery.js';
+import { D1ChangeProcessor } from '../services/d1-change-processor.js';
 
 export async function handleScheduled(event, env, ctx) {
   const startTime = Date.now();
-  console.log('🕐 開始執行定時同步任務...');
+  console.log('🕐 開始執行定時任務...');
   
   // 記錄執行時間到 KV
   await env.KV.put('LAST_CRON_RUN', new Date().toISOString());
+  
+  // 處理 D1 變更同步到 CRM
+  try {
+    console.log('🔄 處理 D1 變更同步到 CRM...');
+    const d1Processor = new D1ChangeProcessor(env);
+    await d1Processor.start();
+  } catch (error) {
+    console.error('D1 變更處理失敗:', error);
+  }
   
   // 獲取對象啟用狀態
   const objectStatus = await env.KV.get('SYNC_OBJECTS_STATUS', 'json') || {};

@@ -5,6 +5,8 @@ import { schemaRoutes } from './schema.js';
 import { schemaEnhancedRoutes } from './schema-enhanced.js';
 import { fieldSyncRoutes } from './field-sync.js';
 import { syncRoutes } from './sync.js';
+import { syncLogsRoutes } from './sync-logs.js';
+import { d1SyncRoutes } from './d1-sync.js';
 import { debugRoutes } from './debug.js';
 import { webhookRoutes } from './webhook.js';
 import { crudRoutes } from './crud.js';
@@ -29,6 +31,30 @@ const corsHeaders = {
 // Handle CORS preflight
 router.options('*', () => {
   return new Response(null, { headers: corsHeaders });
+});
+
+// API endpoint to get current environment
+router.get('/api/environment', (request, env) => {
+  const environment = env.ENVIRONMENT || 'development';
+  const isProduction = environment === 'production';
+  const isDevelopment = environment === 'development';
+  const isStaging = environment === 'staging';
+  
+  return new Response(JSON.stringify({
+    environment,
+    isDevelopment,
+    isStaging,
+    isProduction,
+    debug: env.DEBUG === 'true',
+    syncBatchSize: env.SYNC_BATCH_SIZE || '50',
+    autoSync: env.ENABLE_AUTO_SYNC === 'true',
+    timestamp: new Date().toISOString()
+  }), {
+    headers: {
+      'Content-Type': 'application/json',
+      ...corsHeaders
+    }
+  });
 });
 
 // Admin UI routes
@@ -74,6 +100,8 @@ router.all('/api/objects/*', objectsEnhancedRoutes.handle);
 router.all('/api/objects', objectsEnhancedRoutes.handle);
 router.all('/api/schema/*', schemaEnhancedRoutes.handle);
 router.all('/api/field-sync/*', fieldSyncRoutes.handle);
+router.all('/api/sync-logs/*', syncLogsRoutes.handle);
+router.all('/api/d1-sync/*', d1SyncRoutes.handle);
 router.all('/api/sync/*', syncRoutes.handle);
 router.all('/api/debug/*', debugRoutes.handle);
 router.all('/api/webhook/*', webhookRoutes.handle);

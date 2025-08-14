@@ -1,6 +1,7 @@
 import { Router } from 'itty-router';
 import { FxClient } from '../utils/fx-client.js';
 import { DataSyncService } from '../sync/data-sync-service.js';
+import { SyncLogger } from '../services/sync-logger.js';
 
 export const webhookRoutes = Router({ base: '/api/webhook' });
 
@@ -19,6 +20,8 @@ export const webhookRoutes = Router({ base: '/api/webhook' });
  */
 webhookRoutes.post('/notify', async (request) => {
   const { env } = request;
+  const syncLogger = new SyncLogger(env.DB);
+  const startTime = Date.now();
   
   try {
     // 解析請求內容
@@ -27,9 +30,11 @@ webhookRoutes.post('/notify', async (request) => {
     
     // 驗證必要欄位
     if (!payload.event || !payload.objectApiName || !payload.objectId) {
+      const error = '缺少必要欄位: event, objectApiName, objectId';
+      await syncLogger.logWebhookSync(request, payload, { success: false, error });
       return new Response(JSON.stringify({
         success: false,
-        error: '缺少必要欄位: event, objectApiName, objectId'
+        error
       }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
@@ -50,32 +55,52 @@ webhookRoutes.post('/notify', async (request) => {
       new Date().toISOString()
     ).run();
     
+    let syncResult = { success: true };
+    
     // 根據事件類型處理
-    switch (payload.event) {
-      case 'object.created':
-      case 'object.updated':
-        // 觸發單筆記錄同步
-        await syncSingleRecord(env, payload.objectApiName, payload.objectId);
-        break;
-        
-      case 'object.deleted':
-        // 標記記錄為已刪除
-        await markRecordAsDeleted(env, payload.objectApiName, payload.objectId);
-        break;
-        
-      default:
-        console.log('[Webhook] 未知事件類型:', payload.event);
+    try {
+      switch (payload.event) {
+        case 'object.created':
+        case 'object.updated':
+          // 觸發單筆記錄同步
+          await syncSingleRecord(env, payload.objectApiName, payload.objectId, payload.data);
+          break;
+          
+        case 'object.deleted':
+          // 標記記錄為已刪除
+          await markRecordAsDeleted(env, payload.objectApiName, payload.objectId);
+          break;
+          
+        default:
+          console.log('[Webhook] 未知事件類型:', payload.event);
+      }
+    } catch (syncError) {
+      syncResult = { success: false, error: syncError.message };
+      throw syncError;
     }
+    
+    // 記錄同步日誌
+    syncResult.duration = Date.now() - startTime;
+    await syncLogger.logWebhookSync(request, payload, syncResult);
     
     return new Response(JSON.stringify({
       success: true,
-      message: 'Webhook 處理成功'
+      message: 'Webhook 處理成功',
+      duration: syncResult.duration
     }), {
       headers: { 'Content-Type': 'application/json' }
     });
     
   } catch (error) {
     console.error('[Webhook] 處理失敗:', error);
+    
+    // 記錄失敗日誌
+    await syncLogger.logWebhookSync(request, payload || {}, { 
+      success: false, 
+      error: error.message,
+      duration: Date.now() - startTime
+    });
+    
     return new Response(JSON.stringify({
       success: false,
       error: error.message
@@ -110,7 +135,27 @@ webhookRoutes.get('/config', async (request) => {
         },
         {
           apiName: 'object_8W9cb__c',
-          displayName: '案場'
+          displayName: '案場(SPC)'
+        },
+        {
+          apiName: 'object_k1XqG__c',
+          displayName: 'SPC維修單'
+        },
+        {
+          apiName: 'object_50HJ8__c',
+          displayName: '工地師父'
+        },
+        {
+          apiName: 'SupplierObj',
+          displayName: '供應商'
+        },
+        {
+          apiName: 'site_cabinet__c',
+          displayName: '案場(浴櫃)'
+        },
+        {
+          apiName: 'progress_management_announ__c',
+          displayName: '進度管理公告'
         }
       ],
       instructions: '請在紛享銷客管理後台配置 Webhook，將上述 webhookUrl 填入通知地址'
@@ -155,17 +200,19 @@ webhookRoutes.get('/logs', async (request) => {
 /**
  * 同步單筆記錄
  */
-async function syncSingleRecord(env, objectApiName, objectId) {
+async function syncSingleRecord(env, objectApiName, objectId, changedData = null) {
   try {
     const fxClient = new FxClient(env);
     await fxClient.init();
     
     // 根據對象類型查詢單筆記錄
     let apiPath, dataKey;
-    if (objectApiName === 'NewOpportunityObj') {
+    // 標準對象使用 v2 API
+    if (objectApiName === 'NewOpportunityObj' || objectApiName === 'SupplierObj') {
       apiPath = '/cgi/crm/v2/data/get';
       dataKey = 'data';
     } else {
+      // 自定義對象使用 custom/v2 API
       apiPath = '/cgi/crm/custom/v2/data/get';
       dataKey = 'data';
     }
@@ -190,10 +237,32 @@ async function syncSingleRecord(env, objectApiName, objectId) {
     // 使用 DataSyncService 保存記錄
     const dataSyncService = new DataSyncService(fxClient, env.DB);
     
-    if (objectApiName === 'NewOpportunityObj') {
-      await dataSyncService.saveOpportunities([record]);
-    } else if (objectApiName === 'object_8W9cb__c') {
-      await dataSyncService.saveSites([record]);
+    // 根據不同對象類型調用對應的保存方法
+    switch(objectApiName) {
+      case 'NewOpportunityObj':
+        await dataSyncService.saveOpportunities([record]);
+        break;
+      case 'object_8W9cb__c':
+        await dataSyncService.saveSites([record]);
+        break;
+      case 'object_k1XqG__c':
+        await dataSyncService.saveRepairOrders([record]);
+        break;
+      case 'object_50HJ8__c':
+        await dataSyncService.saveWorkers([record]);
+        break;
+      case 'SupplierObj':
+        await dataSyncService.saveSuppliers([record]);
+        break;
+      case 'site_cabinet__c':
+        await dataSyncService.saveSiteCabinet([record]);
+        break;
+      case 'progress_management_announ__c':
+        await dataSyncService.saveProgressAnnouncement([record]);
+        break;
+      default:
+        console.log('[Webhook] 不支援的對象類型:', objectApiName);
+        return;
     }
     
     console.log('[Webhook] 單筆記錄同步成功:', objectId);
@@ -209,12 +278,19 @@ async function syncSingleRecord(env, objectApiName, objectId) {
  */
 async function markRecordAsDeleted(env, objectApiName, objectId) {
   try {
-    let tableName;
-    if (objectApiName === 'NewOpportunityObj') {
-      tableName = 'newopportunityobj';
-    } else if (objectApiName === 'object_8W9cb__c') {
-      tableName = 'object_8w9cb__c';
-    } else {
+    // 對象名稱到表名的映射
+    const tableMapping = {
+      'NewOpportunityObj': 'newopportunityobj',
+      'object_8W9cb__c': 'object_8w9cb__c',
+      'object_k1XqG__c': 'object_k1xqg__c',
+      'object_50HJ8__c': 'object_50hj8__c',
+      'SupplierObj': 'supplierobj',
+      'site_cabinet__c': 'site_cabinet__c',
+      'progress_management_announ__c': 'progress_management_announ__c'
+    };
+    
+    const tableName = tableMapping[objectApiName];
+    if (!tableName) {
       throw new Error(`不支持的對象類型: ${objectApiName}`);
     }
     
