@@ -315,31 +315,94 @@ export const adminHTML = `<!DOCTYPE html>
                 </el-tab-pane>
                 
                 <el-tab-pane label="同步日誌" name="logs">
-                    <el-table :data="recentLogs" stripe>
-                        <el-table-column prop="completed_at" label="完成時間" width="180">
+                    <div class="sync-logs-header" style="margin-bottom: 20px;">
+                        <el-button @click="loadSyncLogs" :loading="loadingLogs" type="primary" size="small">
+                            <i class="el-icon-refresh"></i> 刷新日誌
+                        </el-button>
+                        <el-button @click="loadSyncStats" type="info" size="small" style="margin-left: 10px;">
+                            <i class="el-icon-data-analysis"></i> 查看統計
+                        </el-button>
+                    </div>
+                    
+                    <el-table :data="recentLogs" stripe v-loading="loadingLogs">
+                        <el-table-column prop="syncTime" label="同步時間" width="180">
                             <template #default="{ row }">
-                                {{ formatDate(row.completed_at) }}
+                                {{ formatDate(row.syncTime || row.sync_time || row.completed_at) }}
                             </template>
                         </el-table-column>
-                        <el-table-column prop="entity_type" label="對象類型" width="150">
+                        <el-table-column label="對象" width="180">
                             <template #default="{ row }">
-                                {{ getObjectName(row.entity_type) }}
+                                <div v-if="row.object">
+                                    <strong>{{ row.object.label }}</strong>
+                                    <br>
+                                    <span style="font-size: 12px; color: #909399;">{{ row.object.apiName }}</span>
+                                </div>
+                                <div v-else>
+                                    {{ getObjectName(row.object_api_name || row.entity_type) }}
+                                </div>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="status" label="狀態" width="100">
+                        <el-table-column label="操作" width="100">
                             <template #default="{ row }">
-                                <el-tag :type="row.status === 'COMPLETED' ? 'success' : 'danger'">
-                                    {{ row.status === 'COMPLETED' ? '成功' : '失敗' }}
+                                <el-tag size="small" :type="getOperationType(row.operation || 'batch')">
+                                    {{ getOperationLabel(row.operation || 'batch') }}
                                 </el-tag>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="records_count" label="總記錄數" width="120" align="center" />
-                        <el-table-column label="成功數量" width="120" align="center">
+                        <el-table-column label="觸發來源" width="150">
                             <template #default="{ row }">
-                                {{ row.records_count - row.error_count }}
+                                <div v-if="row.triggerSource || row.trigger_source">
+                                    <el-tag size="small" :type="getTriggerType(row.triggerSource || row.trigger_source || 'scheduled')">
+                                        {{ getTriggerLabel(row.triggerSource || row.trigger_source || 'scheduled') }}
+                                    </el-tag>
+                                    <div v-if="row.triggerDetails || row.trigger_details" style="font-size: 12px; color: #909399; margin-top: 2px;">
+                                        {{ row.triggerDetails || row.trigger_details }}
+                                    </div>
+                                </div>
+                                <span v-else style="color: #909399; font-size: 12px;">定時同步</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="error_count" label="錯誤數量" width="120" align="center" />
+                        <el-table-column label="變更欄位" width="200">
+                            <template #default="{ row }">
+                                <div v-if="row.fieldsChanged && row.fieldsChanged.length > 0">
+                                    <el-tooltip :content="row.fieldsChanged.join(', ')" placement="top">
+                                        <span style="font-size: 12px;">
+                                            {{ row.fieldsChanged.slice(0, 3).join(', ') }}
+                                            <span v-if="row.fieldsChanged.length > 3">
+                                                ... (共 {{ row.fieldsChanged.length }} 個)
+                                            </span>
+                                        </span>
+                                    </el-tooltip>
+                                </div>
+                                <span v-else style="color: #909399; font-size: 12px;">-</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="處理結果" width="150">
+                            <template #default="{ row }">
+                                <div>
+                                    <el-tag :type="getStatusType(row)" size="small">
+                                        {{ getStatusLabel(row.status || (row.error_count > 0 ? 'partial' : 'success')) }}
+                                    </el-tag>
+                                    <div style="font-size: 12px; margin-top: 2px;">
+                                        <span v-if="row.records" style="color: #67C23A;">✓ {{ row.records.success || row.records.processed || 0 }}</span>
+                                        <span v-else-if="row.records_count" style="color: #67C23A;">✓ {{ row.records_count - (row.error_count || 0) }}</span>
+                                        <span v-if="row.records && row.records.failed > 0" style="color: #F56C6C; margin-left: 8px;">✗ {{ row.records.failed }}</span>
+                                        <span v-else-if="row.error_count > 0" style="color: #F56C6C; margin-left: 8px;">✗ {{ row.error_count }}</span>
+                                    </div>
+                                </div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="耗時" width="100">
+                            <template #default="{ row }">
+                                <span v-if="row.performance && row.performance.durationSec">
+                                    {{ row.performance.durationSec }}s
+                                </span>
+                                <span v-else-if="row.duration_ms">
+                                    {{ (row.duration_ms / 1000).toFixed(2) }}s
+                                </span>
+                                <span v-else>-</span>
+                            </template>
+                        </el-table-column>
                     </el-table>
                 </el-tab-pane>
                 
@@ -682,6 +745,7 @@ export const adminHTML = `<!DOCTYPE html>
                         'all': false
                     },
                     recentLogs: [],
+                    loadingLogs: false,
                     syncedObjects: [
                         { displayName: '商機', apiName: 'NewOpportunityObj', fieldCount: 61, lastSync: '2025-08-03 10:01:23' },
                         { displayName: '案場', apiName: 'object_8W9cb__c', fieldCount: 47, lastSync: '2025-08-03 10:09:12' }
@@ -795,7 +859,8 @@ export const adminHTML = `<!DOCTYPE html>
                         const response = await axios.get('/api/debug/d1-stats');
                         if (response.data.success) {
                             this.stats = response.data.data.tables;
-                            this.recentLogs = response.data.data.recentSyncs || [];
+                            // 不再從這裡載入日誌，改用新的 API
+                            await this.loadSyncLogs();
                         }
                     } catch (error) {
                         ElMessage.error('載入統計失敗: ' + error.message);
@@ -903,9 +968,123 @@ export const adminHTML = `<!DOCTYPE html>
                 getObjectName(apiName) {
                     const names = {
                         'NewOpportunityObj': '商機',
-                        'object_8W9cb__c': '案場'
+                        'object_8W9cb__c': '案場(SPC)',
+                        'object_k1XqG__c': 'SPC維修單',
+                        'object_50HJ8__c': '工地師父',
+                        'SupplierObj': '供應商',
+                        'site_cabinet__c': '案場(浴櫃)',
+                        'progress_management_announ__c': '進度管理公告'
                     };
                     return names[apiName] || apiName;
+                },
+                
+                // 新增：載入詳細同步日誌
+                async loadSyncLogs() {
+                    this.loadingLogs = true;
+                    try {
+                        const response = await axios.get('/api/sync-logs/recent?limit=50');
+                        if (response.data.success) {
+                            this.recentLogs = response.data.data || [];
+                        } else {
+                            // 如果新 API 不存在，嘗試舊的 API
+                            const oldResponse = await axios.get('/api/debug/d1-stats');
+                            if (oldResponse.data.success) {
+                                this.recentLogs = oldResponse.data.data.recentSyncs || [];
+                            }
+                        }
+                    } catch (error) {
+                        console.error('載入同步日誌失敗:', error);
+                        // 嘗試舊的 API
+                        try {
+                            const oldResponse = await axios.get('/api/debug/d1-stats');
+                            if (oldResponse.data.success) {
+                                this.recentLogs = oldResponse.data.data.recentSyncs || [];
+                            }
+                        } catch (e) {
+                            ElMessage.error('載入同步日誌失敗');
+                        }
+                    } finally {
+                        this.loadingLogs = false;
+                    }
+                },
+                
+                // 新增：載入同步統計
+                async loadSyncStats() {
+                    try {
+                        const response = await axios.get('/api/sync-logs/stats?hours=24');
+                        if (response.data.success) {
+                            const stats = response.data.data;
+                            ElMessage({
+                                message: `過去 24 小時：總同步 ${stats.summary.totalSyncs} 次，處理 ${stats.summary.totalRecords} 條記錄，成功 ${stats.summary.totalSuccess} 條，失敗 ${stats.summary.totalFailed} 條`,
+                                type: 'info',
+                                duration: 5000
+                            });
+                        }
+                    } catch (error) {
+                        console.error('載入統計失敗:', error);
+                    }
+                },
+                
+                // 輔助方法
+                getOperationType(operation) {
+                    const types = {
+                        'create': 'success',
+                        'update': '',
+                        'delete': 'danger',
+                        'batch': 'info'
+                    };
+                    return types[operation] || 'info';
+                },
+                
+                getOperationLabel(operation) {
+                    const labels = {
+                        'create': '新增',
+                        'update': '更新',
+                        'delete': '刪除',
+                        'batch': '批次'
+                    };
+                    return labels[operation] || operation;
+                },
+                
+                getTriggerType(source) {
+                    const types = {
+                        'webhook': 'success',
+                        'scheduled': 'info',
+                        'manual': 'warning',
+                        'd1_change': '',
+                        'd1_auto_sync': ''
+                    };
+                    return types[source] || '';
+                },
+                
+                getTriggerLabel(source) {
+                    const labels = {
+                        'webhook': 'Webhook',
+                        'scheduled': '定時',
+                        'manual': '手動',
+                        'd1_change': 'D1 變更',
+                        'd1_auto_sync': 'D1 自動'
+                    };
+                    return labels[source] || source;
+                },
+                
+                getStatusLabel(status) {
+                    const labels = {
+                        'success': '成功',
+                        'failed': '失敗',
+                        'partial': '部分成功',
+                        'pending': '待處理',
+                        'skipped': '跳過',
+                        'COMPLETED': '成功'
+                    };
+                    return labels[status] || status;
+                },
+                
+                getStatusType(row) {
+                    if (row.status === 'success' || row.status === 'COMPLETED') return 'success';
+                    if (row.status === 'failed') return 'danger';
+                    if (row.status === 'partial' || row.error_count > 0) return 'warning';
+                    return 'info';
                 },
                 
                 // 對象管理方法
