@@ -367,44 +367,68 @@ export const fieldMappingsAll = {
   'object_50HJ8__c': {
     displayName: '工地師父',
     fields: [
+      // 必填欄位
       { apiName: 'tenant_id', label: 'tenant_id', dataType: '单行文本', required: true, description: '' },
-      { apiName: 'lock_rule', label: '锁定规则', dataType: 'lock_rule', required: false, description: '' },
-      { apiName: 'life_status_before_invalid', label: '作废前生命状态', dataType: '单行文本', required: false, description: '' },
-      { apiName: 'owner_department', label: '负责人主属部门', dataType: '单行文本', required: false, description: '' },
-      { apiName: 'lock_status', label: '锁定状态', dataType: '单选', required: false, description: '未锁定;锁定' },
-      { apiName: 'origin_source', label: '数据来源', dataType: '单选', required: false, description: '数据同步' },
-      { apiName: 'lock_user', label: '加锁人', dataType: '人员', required: false, description: '' },
-      { apiName: 'is_deleted', label: 'is_deleted', dataType: '布尔值', required: false, description: '' },
       { apiName: 'object_describe_api_name', label: 'object_describe_api_name', dataType: '单行文本', required: true, description: '' },
-      { apiName: 'out_owner', label: '外部负责人', dataType: '人员', required: false, description: '' },
       { apiName: 'owner', label: '负责人', dataType: '人员', required: true, description: '' },
-      { apiName: 'field_zH3W0__c', label: '手機', dataType: '单行文本', required: false, description: '' },
-      { apiName: 'package', label: 'package', dataType: '单行文本', required: false, description: '' },
-      { apiName: 'last_modified_time', label: '最后修改时间', dataType: '日期时间', required: false, description: '' },
-      { apiName: 'create_time', label: '创建时间', dataType: '日期时间', required: false, description: '' },
-      { apiName: 'field_8kWUi__c', label: '統編', dataType: '单行文本', required: false, description: '' },
+      { apiName: 'name', label: '姓名', dataType: '单行文本', required: true, description: '' },
+      
+      // 鎖定相關
+      { apiName: 'lock_rule', label: '锁定规则', dataType: 'lock_rule', required: false, description: '' },
+      { apiName: 'lock_status', label: '锁定状态', dataType: '单选', required: false, description: '未锁定;锁定' },
+      { apiName: 'lock_user', label: '加锁人', dataType: '人员', required: false, description: '' },
+      
+      // 負責項目（多選查找關聯）
+      { apiName: 'field_a7jCj__c', label: '負責維修單', dataType: '查找关联(多选)', required: false, description: '' },
+      { apiName: 'field_zuA4N__c', label: '負責工單', dataType: '查找关联(多选)', required: false, description: '' },
+      { apiName: 'field_GJk8L__c', label: '負責商機', dataType: '查找关联(多选)', required: false, description: '' },
+      
+      // 聯絡資訊
+      { apiName: 'phone_number__c', label: '手機', dataType: '手机', required: false, description: '' },
+      { apiName: 'field_HdgcK__c', label: '連絡人', dataType: '查找关联', required: false, description: '' },
+      
+      // 帳號資訊
+      { apiName: 'account__c', label: '帳號', dataType: '单行文本', required: false, description: '' },
+      { apiName: 'field_kz1Y9__c', label: '帳號1', dataType: '单行文本', required: false, description: '' },
+      { apiName: 'password__c', label: '密碼', dataType: '单行文本', required: false, description: '' },
+      
+      // 基本資訊
+      { apiName: 'abbreviation__c', label: '簡稱', dataType: '单行文本', required: false, description: '' },
+      { apiName: 'LINE_user_id__c', label: 'UID', dataType: '单行文本', required: false, description: 'LINE用戶ID' },
+      { apiName: 'field_iL2BT__c', label: '角色', dataType: '单选', required: false, description: '元心;建設公司;工班;設計師;其他' },
+      { apiName: 'field_D1087__c', label: '屬於那個工班', dataType: '查找关联', required: false, description: '' },
+      { apiName: 'field_Imtt7__c', label: '頭像', dataType: '图片', required: false, description: '' },
+      { apiName: 'field_CKi2C__c', label: '單行文本', dataType: '单行文本', required: false, description: '' },
+      
+      // 生命週期
       { apiName: 'life_status', label: '生命状态', dataType: '单选', required: false, description: '未生效;审核中;正常;变更中;作废' },
-      { apiName: 'field_z7RM4__c', label: '是否外包', dataType: '布尔值', required: false, description: '' },
-      { apiName: 'last_modified_by', label: '最后修改人', dataType: '人员', required: false, description: '' },
-      { apiName: 'out_tenant_id', label: '外部企业', dataType: '单行文本', required: false, description: '' },
-      { apiName: 'version', label: 'version', dataType: '数字', required: false, description: '' },
+      { apiName: 'life_status_before_invalid', label: '作废前生命状态', dataType: '单行文本', required: false, description: '' },
+      
+      // 數據來源
+      { apiName: 'origin_source', label: '数据来源', dataType: '单选', required: false, description: '数据同步' },
+      { apiName: 'is_deleted', label: 'is_deleted', dataType: '布尔值', required: false, description: '' },
+      
+      // 負責人部門
+      { apiName: 'owner_department', label: '负责人主属部门', dataType: '单行文本', required: false, description: '' },
+      { apiName: 'out_owner', label: '外部负责人', dataType: '人员', required: false, description: '' },
+      
+      // 時間戳記
+      { apiName: 'create_time', label: '创建时间', dataType: '日期时间', required: false, description: '' },
       { apiName: 'created_by', label: '创建人', dataType: '人员', required: false, description: '' },
-      { apiName: 'field_2gAI0__c', label: '地址', dataType: '多行文本', required: false, description: '' },
-      { apiName: 'relevant_team', label: '相关团队', dataType: 'embedded_object_list', required: false, description: '' },
-      { apiName: 'record_type', label: '业务类型', dataType: 'record_type', required: false, description: '' },
+      { apiName: 'last_modified_time', label: '最后修改时间', dataType: '日期时间', required: false, description: '' },
+      { apiName: 'last_modified_by', label: '最后修改人', dataType: '人员', required: false, description: '' },
+      
+      // 組織相關
+      { apiName: 'out_tenant_id', label: '外部企业', dataType: '单行文本', required: false, description: '' },
       { apiName: 'data_own_department', label: '归属部门', dataType: '部门', required: false, description: '' },
-      { apiName: 'field_4XIBG__c', label: '備註', dataType: '多行文本', required: false, description: '' },
-      { apiName: 'field_1S3YP__c', label: '身分證', dataType: '单行文本', required: false, description: '' },
-      { apiName: 'field_p7bP3__c', label: '姓名', dataType: '单行文本', required: true, description: '' },
-      { apiName: 'name', label: '工地師父編號', dataType: '自增编号', required: true, description: '' },
+      { apiName: 'relevant_team', label: '相关团队', dataType: 'embedded_object_list', required: false, description: '' },
+      
+      // 系統欄位
+      { apiName: 'package', label: 'package', dataType: '单行文本', required: false, description: '' },
+      { apiName: 'version', label: 'version', dataType: '数字', required: false, description: '' },
+      { apiName: 'record_type', label: '业务类型', dataType: 'record_type', required: false, description: '' },
       { apiName: 'order_by', label: 'order_by', dataType: '数字', required: false, description: '' },
-      { apiName: '_id', label: '_id', dataType: '单行文本', required: false, description: '' },
-      { apiName: 'lock_time', label: '加锁时间', dataType: '日期时间', required: false, description: '' },
-      { apiName: 'valid_time', label: '生效时间', dataType: '日期时间', required: false, description: '' },
-      { apiName: 'invalid_time', label: '作废时间', dataType: '日期时间', required: false, description: '' },
-      { apiName: 'source_object_id', label: '原始业务ID', dataType: '单行文本', required: false, description: '' },
-      { apiName: 'external_id_for_sync', label: '外部系统唯一ID', dataType: '单行文本', required: false, description: '' },
-      { apiName: 'owner_department_id', label: '负责人主属部门', dataType: '单行文本', required: false, description: '' }
+      { apiName: '_id', label: '_id', dataType: '单行文本', required: false, description: '' }
     ]
   },
 

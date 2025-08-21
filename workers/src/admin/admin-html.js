@@ -113,6 +113,7 @@ export const adminHTML = `<!DOCTYPE html>
             </div>
             <div class="header-right">
                 <span class="update-time">最後更新: {{ lastUpdate }}</span>
+                <el-button type="warning" @click="goToSyncMonitor" icon="Monitor">同步詳情監控</el-button>
                 <el-button type="success" @click="goToEmployees" icon="User">員工管理</el-button>
                 <el-button type="primary" @click="refreshData" :icon="RefreshIcon">重新載入</el-button>
             </div>
@@ -954,6 +955,10 @@ export const adminHTML = `<!DOCTYPE html>
                     window.open('/admin/employees', '_blank');
                 },
                 
+                goToSyncMonitor() {
+                    window.open('/sync-monitor', '_blank');
+                },
+                
                 handleStatClick(apiName) {
                     if (apiName === 'employees_simple') {
                         this.goToEmployees();
@@ -982,27 +987,15 @@ export const adminHTML = `<!DOCTYPE html>
                 async loadSyncLogs() {
                     this.loadingLogs = true;
                     try {
-                        const response = await axios.get('/api/sync-logs/recent?limit=50');
+                        const response = await axios.get('/api/sync-logs?limit=50');
                         if (response.data.success) {
                             this.recentLogs = response.data.data || [];
                         } else {
-                            // 如果新 API 不存在，嘗試舊的 API
-                            const oldResponse = await axios.get('/api/debug/d1-stats');
-                            if (oldResponse.data.success) {
-                                this.recentLogs = oldResponse.data.data.recentSyncs || [];
-                            }
+                            ElMessage.error('載入同步日誌失敗: ' + response.data.error);
                         }
                     } catch (error) {
                         console.error('載入同步日誌失敗:', error);
-                        // 嘗試舊的 API
-                        try {
-                            const oldResponse = await axios.get('/api/debug/d1-stats');
-                            if (oldResponse.data.success) {
-                                this.recentLogs = oldResponse.data.data.recentSyncs || [];
-                            }
-                        } catch (e) {
-                            ElMessage.error('載入同步日誌失敗');
-                        }
+                        ElMessage.error('載入同步日誌失敗: 網路錯誤');
                     } finally {
                         this.loadingLogs = false;
                     }
@@ -1011,11 +1004,12 @@ export const adminHTML = `<!DOCTYPE html>
                 // 新增：載入同步統計
                 async loadSyncStats() {
                     try {
-                        const response = await axios.get('/api/sync-logs/stats?hours=24');
+                        const response = await axios.get('/api/database-stats');
                         if (response.data.success) {
                             const stats = response.data.data;
+                            const total = Object.values(stats).reduce((sum, count) => sum + (typeof count === 'number' ? count : 0), 0);
                             ElMessage({
-                                message: '過去 24 小時：總同步 ' + stats.summary.totalSyncs + ' 次，處理 ' + stats.summary.totalRecords + ' 條記錄，成功 ' + stats.summary.totalSuccess + ' 條，失敗 ' + stats.summary.totalFailed + ' 條',
+                                message: '資料庫統計：案場 ' + stats.object_8w9cb__c + ' 條，維修單 ' + stats.object_k1XqG__c + ' 條，工地師父 ' + stats.object_50HJ8__c + ' 條，總計 ' + total + ' 條記錄',
                                 type: 'info',
                                 duration: 5000
                             });

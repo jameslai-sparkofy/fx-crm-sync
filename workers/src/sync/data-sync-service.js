@@ -5,6 +5,7 @@
 
 const FieldValidator = require('./field-validator');
 const DynamicFieldHandler = require('./dynamic-field-handler');
+import { getBatchConfig, calculateSafeOperations, shouldStopDueToTime, adjustBatchSize } from '../config/batch-config.js';
 
 export class DataSyncService {
   constructor(fxClient, db) {
@@ -21,8 +22,8 @@ export class DataSyncService {
     const syncId = `opp_sync_${Date.now()}`;
     const startTime = new Date();
     const execStartTime = Date.now();
-    const MAX_EXECUTION_TIME = 25000; // 25秒安全限制
-    const batchSize = 500; // 每批處理500條
+    const MAX_EXECUTION_TIME = 90000; // 90秒安全限制
+    const batchSize = 50; // 修復：減少批次大小避免資源超限
     
     try {
       console.log(`[${syncId}] 開始同步商機數據...`);
@@ -153,8 +154,8 @@ export class DataSyncService {
     const syncId = `opp_contacts_sync_${Date.now()}`;
     const startTime = new Date();
     const execStartTime = Date.now();
-    const MAX_EXECUTION_TIME = 25000; // 25秒安全限制
-    const batchSize = 500; // 每批處理500條
+    const MAX_EXECUTION_TIME = 90000; // 90秒安全限制
+    const batchSize = 50; // 修復：減少批次大小避免資源超限
     
     try {
       console.log(`[${syncId}] 開始同步商機連絡人數據...`);
@@ -324,8 +325,8 @@ export class DataSyncService {
     const syncId = `repair_sync_${Date.now()}`;
     const startTime = new Date();
     const execStartTime = Date.now();
-    const MAX_EXECUTION_TIME = 25000;
-    const batchSize = 500;
+    const MAX_EXECUTION_TIME = 90000;
+    const batchSize = 50;
     
     try {
       console.log(`[${syncId}] 開始同步維修單數據...`);
@@ -426,8 +427,8 @@ export class DataSyncService {
     const syncId = `worker_sync_${Date.now()}`;
     const startTime = new Date();
     const execStartTime = Date.now();
-    const MAX_EXECUTION_TIME = 25000;
-    const batchSize = 500;
+    const MAX_EXECUTION_TIME = 90000;
+    const batchSize = 50;
     
     try {
       console.log(`[${syncId}] 開始同步工地師父數據...`);
@@ -528,8 +529,8 @@ export class DataSyncService {
     const syncId = `supplier_sync_${Date.now()}`;
     const startTime = new Date();
     const execStartTime = Date.now();
-    const MAX_EXECUTION_TIME = 25000;
-    const batchSize = 500;
+    const MAX_EXECUTION_TIME = 90000;
+    const batchSize = 50;
     
     try {
       console.log(`[${syncId}] 開始同步供應商數據...`);
@@ -630,8 +631,8 @@ export class DataSyncService {
     const syncId = `site_cabinet_sync_${Date.now()}`;
     const startTime = new Date();
     const execStartTime = Date.now();
-    const MAX_EXECUTION_TIME = 25000;
-    const batchSize = 500;
+    const MAX_EXECUTION_TIME = 90000;
+    const batchSize = 50;
     
     try {
       console.log(`[${syncId}] 開始同步案場(浴櫃)數據...`);
@@ -732,8 +733,8 @@ export class DataSyncService {
     const syncId = `progress_announcement_sync_${Date.now()}`;
     const startTime = new Date();
     const execStartTime = Date.now();
-    const MAX_EXECUTION_TIME = 25000;
-    const batchSize = 500;
+    const MAX_EXECUTION_TIME = 90000;
+    const batchSize = 50;
     
     try {
       console.log(`[${syncId}] 開始同步進度管理公告數據...`);
@@ -828,15 +829,21 @@ export class DataSyncService {
   }
 
   /**
-   * 同步案場數據 - 優化版（平衡限制）
+   * 同步案場數據 - 智能分批版本
    */
   async syncSites(options = {}) {
     const syncId = `site_sync_${Date.now()}`;
     const startTime = new Date();
     const execStartTime = Date.now();
-    const MAX_EXECUTION_TIME = 120000; // 2 分鐘執行時間
-    const MAX_BATCHES = 3; // 3 批次，每批 200 條 = 600 條
-    const batchSize = 200; // 每批 200 條，總共 600 個操作，在 1000 限制內
+    
+    // 使用智能分批配置
+    const batchConfig = getBatchConfig('object_8W9cb__c');
+    const safeOps = calculateSafeOperations('object_8W9cb__c');
+    
+    let { batchSize, maxBatches } = batchConfig;
+    maxBatches = Math.min(maxBatches, safeOps.maxBatches);
+    
+    console.log(`[${syncId}] 智能分批配置: 批次大小=${batchSize}, 最大批次=${maxBatches}, 預估操作=${safeOps.estimatedOperations}`);
     
     try {
       console.log(`[${syncId}] 開始同步案場數據...`);
@@ -895,16 +902,39 @@ export class DataSyncService {
       let batchNumber = 0;
       let isCompleted = false;
       
-      // 分批處理，但限制批次數量
-      while (hasMore && batchNumber < MAX_BATCHES) {
-        // 檢查執行時間
-        if (Date.now() - execStartTime > MAX_EXECUTION_TIME) {
+      // 性能追踪（用於動態調整）
+      const performanceTracker = {
+        startTime: execStartTime,
+        recordTimes: [],
+        errors: 0
+      };
+      
+      // 智能分批處理
+      while (hasMore && batchNumber < maxBatches) {
+        // 智能時間檢查
+        if (shouldStopDueToTime(execStartTime)) {
           console.log(`[${syncId}] 接近執行時間限制，保存進度並退出`);
           break;
         }
         
+        // 動態調整批次大小（基於性能表現）
+        if (batchNumber > 0 && performanceTracker.recordTimes.length > 0) {
+          const avgTime = performanceTracker.recordTimes.reduce((a, b) => a + b, 0) / performanceTracker.recordTimes.length;
+          const errorRate = performanceTracker.errors / totalRecords;
+          
+          const adjustedSize = adjustBatchSize('object_8W9cb__c', {
+            avgTimePerRecord: avgTime,
+            errorRate: errorRate
+          });
+          
+          if (adjustedSize !== batchSize) {
+            batchSize = adjustedSize;
+            console.log(`[${syncId}] 動態調整批次大小為: ${batchSize}`);
+          }
+        }
+        
         batchNumber++;
-        console.log(`[${syncId}] 處理第 ${batchNumber}/${MAX_BATCHES} 批，offset: ${offset}`);
+        console.log(`[${syncId}] 處理第 ${batchNumber}/${maxBatches} 批，offset: ${offset}`);
         
         // 獲取一批數據
         const response = await this.fxClient.post('/cgi/crm/custom/v2/data/query', {
@@ -933,13 +963,23 @@ export class DataSyncService {
         if (batchCount > 0) {
           console.log(`[${syncId}] 第 ${batchNumber} 批獲取 ${batchCount} 條（CRM總數: ${totalInCRM}）`);
           
+          // 追踪批次處理時間
+          const batchStartTime = Date.now();
+          
           // 同步這批數據到D1
           const result = await this.batchSyncSites(batch);
+          
+          // 更新性能統計
+          const batchTime = Date.now() - batchStartTime;
+          const timePerRecord = batchTime / batchCount;
+          performanceTracker.recordTimes.push(timePerRecord);
+          performanceTracker.errors += result.errors;
+          
           totalSuccess += result.success;
           totalErrors += result.errors;
           totalRecords += batchCount;
           
-          console.log(`[${syncId}] 第 ${batchNumber} 批完成: 成功 ${result.success}/${batchCount}`);
+          console.log(`[${syncId}] 第 ${batchNumber} 批完成: 成功 ${result.success}/${batchCount}, 耗時 ${batchTime}ms (${timePerRecord.toFixed(2)}ms/條)`);
         } else {
           console.log(`[${syncId}] 第 ${batchNumber} 批無數據，同步完成`);
           isCompleted = true;
@@ -1537,7 +1577,7 @@ export class DataSyncService {
   async batchSyncOpportunities(opportunities) {
     let success = 0;
     let errors = 0;
-    const batchSize = 500;
+    const batchSize = 50;
     
     // 分批處理
     for (let i = 0; i < opportunities.length; i += batchSize) {
@@ -1716,25 +1756,43 @@ export class DataSyncService {
         console.log(`[工地師父同步] 處理第 ${Math.floor(i / batchSize) + 1} 批，共 ${batch.length} 條`);
         const stmt = this.db.prepare(`
           INSERT INTO object_50hj8__c (
-            _id, name, owner, owner__r, owner_department_id, owner_department,
-            create_time, created_by, created_by__r,
-            last_modified_time, last_modified_by, last_modified_by__r,
-            life_status, life_status__r, lock_status, lock_status__r,
-            is_deleted, record_type, version,
-            data_own_department, data_own_department__r,
-            relevant_team, total_num,
+            _id, name, tenant_id, object_describe_api_name, owner,
+            abbreviation__c, account__c, password__c, phone_number__c,
+            field_D1087__c, field_D1087__c__r, field_D1087__c__relation_ids,
+            field_Imtt7__c, LINE_user_id__c, field_kz1Y9__c, field_CKi2C__c,
+            field_iL2BT__c, field_iL2BT__c__r,
+            field_a7jCj__c, field_zuA4N__c, field_HdgcK__c, field_GJk8L__c,
+            owner__r, owner__l, owner_department, owner_department_id, out_owner,
+            create_time, created_by, created_by__r, created_by__l,
+            last_modified_time, last_modified_by, last_modified_by__r, last_modified_by__l,
+            life_status, life_status__r, life_status_before_invalid,
+            lock_status, lock_status__r, lock_rule, lock_user,
+            is_deleted, data_own_department, data_own_department__r, data_own_department__l,
+            out_tenant_id, relevant_team, relevant_team__r,
+            record_type, origin_source, package, version, order_by, total_num, searchAfterId,
             fx_created_at, fx_updated_at, sync_version
           ) VALUES (
             ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10,
             ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19, ?20,
-            ?21, ?22, ?23, ?24, ?25, ?26
+            ?21, ?22, ?23, ?24, ?25, ?26, ?27, ?28, ?29, ?30,
+            ?31, ?32, ?33, ?34, ?35, ?36, ?37, ?38, ?39, ?40,
+            ?41, ?42, ?43, ?44, ?45, ?46, ?47, ?48, ?49, ?50,
+            ?51, ?52, ?53, ?54, ?55, ?56, ?57, ?58, ?59, ?60
           )
           ON CONFLICT(_id) DO UPDATE SET
             name = excluded.name,
+            abbreviation__c = excluded.abbreviation__c,
+            account__c = excluded.account__c,
+            password__c = excluded.password__c,
+            phone_number__c = excluded.phone_number__c,
+            field_D1087__c = excluded.field_D1087__c,
+            field_D1087__c__r = excluded.field_D1087__c__r,
+            LINE_user_id__c = excluded.LINE_user_id__c,
+            field_iL2BT__c = excluded.field_iL2BT__c,
             owner = excluded.owner,
             owner__r = excluded.owner__r,
-            owner_department_id = excluded.owner_department_id,
             owner_department = excluded.owner_department,
+            owner_department_id = excluded.owner_department_id,
             last_modified_time = excluded.last_modified_time,
             last_modified_by = excluded.last_modified_by,
             last_modified_by__r = excluded.last_modified_by__r,
@@ -2198,34 +2256,87 @@ export class DataSyncService {
    * 綁定工地師父數據
    */
   bindWorkerData(stmt, worker) {
-    // 26 個值對應 26 個欄位
+    // 59 個值對應 59 個欄位 (sync_time 使用 DEFAULT)
     return stmt.bind(
-      worker._id,                                                        // 1
-      worker.name,                                                       // 2
-      Array.isArray(worker.owner) ? worker.owner[0] : worker.owner,     // 3
-      this.getObjectValue(worker.owner__r, 'name'),                     // 4
-      worker.owner_department_id || null,                               // 5
-      worker.owner_department || null,                                  // 6
-      worker.create_time,                                               // 7
-      Array.isArray(worker.created_by) ? worker.created_by[0] : worker.created_by, // 8
-      this.getObjectValue(worker.created_by__r, 'name'),               // 9
-      worker.last_modified_time,                                        // 10
-      Array.isArray(worker.last_modified_by) ? worker.last_modified_by[0] : worker.last_modified_by, // 11
-      this.getObjectValue(worker.last_modified_by__r, 'name'),         // 12
-      worker.life_status || 'normal',                                   // 13
-      worker.life_status__r || null,                                    // 14
-      worker.lock_status || '0',                                        // 15
-      worker.lock_status__r || null,                                    // 16
-      worker.is_deleted || false,                                       // 17
-      worker.record_type || 'default__c',                               // 18
-      worker.version || null,                                           // 19
-      Array.isArray(worker.data_own_department) ? worker.data_own_department[0] : worker.data_own_department, // 20
-      this.getObjectValue(worker.data_own_department__r, 'deptName'),   // 21
-      Array.isArray(worker.relevant_team) ? JSON.stringify(worker.relevant_team) : null,  // 22
-      worker.total_num || null,                                         // 23
-      worker.create_time,                                                // 24
-      worker.last_modified_time,                                        // 25
-      0                                                                  // 26
+      // 基本欄位 (1-5)
+      worker._id,                                                        // 1: _id
+      worker.name,                                                       // 2: name
+      worker.tenant_id || '781014',                                     // 3: tenant_id
+      worker.object_describe_api_name || 'object_50HJ8__c',             // 4: object_describe_api_name
+      Array.isArray(worker.owner) ? worker.owner[0] : worker.owner,     // 5: owner
+      
+      // 自定義欄位 (6-18)
+      worker.abbreviation__c || null,                                   // 6: abbreviation__c (簡稱)
+      worker.account__c || null,                                        // 7: account__c (帳號)
+      worker.password__c || null,                                       // 8: password__c (密碼)
+      worker.phone_number__c || null,                                   // 9: phone_number__c (手機)
+      worker.field_D1087__c || null,                                    // 10: field_D1087__c (屬於那個工班)
+      worker.field_D1087__c__r || null,                                 // 11: field_D1087__c__r
+      worker.field_D1087__c__relation_ids || null,                      // 12: field_D1087__c__relation_ids
+      Array.isArray(worker.field_Imtt7__c) ? JSON.stringify(worker.field_Imtt7__c) : null, // 13: field_Imtt7__c (頭像)
+      worker.LINE_user_id__c || null,                                   // 14: LINE_user_id__c (UID)
+      worker.field_kz1Y9__c || null,                                    // 15: field_kz1Y9__c (帳號1)
+      worker.field_CKi2C__c || null,                                    // 16: field_CKi2C__c (單行文本)
+      worker.field_iL2BT__c || null,                                    // 17: field_iL2BT__c (角色)
+      worker.field_iL2BT__c__r || null,                                 // 18: field_iL2BT__c__r
+      
+      // 多選查找關聯欄位 (19-22)
+      Array.isArray(worker.field_a7jCj__c) ? JSON.stringify(worker.field_a7jCj__c) : null, // 19: field_a7jCj__c (負責維修單)
+      Array.isArray(worker.field_zuA4N__c) ? JSON.stringify(worker.field_zuA4N__c) : null, // 20: field_zuA4N__c (負責工單)
+      worker.field_HdgcK__c || null,                                    // 21: field_HdgcK__c (連絡人)
+      Array.isArray(worker.field_GJk8L__c) ? JSON.stringify(worker.field_GJk8L__c) : null, // 22: field_GJk8L__c (負責商機)
+      
+      // 負責人相關 (23-27)
+      this.getObjectValue(worker.owner__r, 'name'),                     // 23: owner__r
+      Array.isArray(worker.owner__l) ? JSON.stringify(worker.owner__l) : null, // 24: owner__l
+      worker.owner_department || null,                                  // 25: owner_department
+      worker.owner_department_id || null,                               // 26: owner_department_id
+      Array.isArray(worker.out_owner) ? worker.out_owner[0] : worker.out_owner, // 27: out_owner
+      
+      // 時間戳記 (28-35)
+      worker.create_time || null,                                       // 28: create_time
+      Array.isArray(worker.created_by) ? worker.created_by[0] : worker.created_by, // 29: created_by
+      this.getObjectValue(worker.created_by__r, 'name'),                // 30: created_by__r
+      Array.isArray(worker.created_by__l) ? JSON.stringify(worker.created_by__l) : null, // 31: created_by__l
+      worker.last_modified_time || null,                                // 32: last_modified_time
+      Array.isArray(worker.last_modified_by) ? worker.last_modified_by[0] : worker.last_modified_by, // 33: last_modified_by
+      this.getObjectValue(worker.last_modified_by__r, 'name'),          // 34: last_modified_by__r
+      Array.isArray(worker.last_modified_by__l) ? JSON.stringify(worker.last_modified_by__l) : null, // 35: last_modified_by__l
+      
+      // 狀態欄位 (36-42)
+      worker.life_status || 'normal',                                   // 36: life_status
+      worker.life_status__r || null,                                    // 37: life_status__r
+      worker.life_status_before_invalid || null,                        // 38: life_status_before_invalid
+      worker.lock_status || '0',                                        // 39: lock_status
+      worker.lock_status__r || null,                                    // 40: lock_status__r
+      worker.lock_rule || null,                                         // 41: lock_rule
+      Array.isArray(worker.lock_user) ? worker.lock_user[0] : worker.lock_user, // 42: lock_user
+      
+      // 資料歸屬 (43-46)
+      worker.is_deleted || false,                                       // 43: is_deleted
+      Array.isArray(worker.data_own_department) ? worker.data_own_department[0] : worker.data_own_department, // 44: data_own_department
+      this.getObjectValue(worker.data_own_department__r, 'deptName'),   // 45: data_own_department__r
+      Array.isArray(worker.data_own_department__l) ? JSON.stringify(worker.data_own_department__l) : null, // 46: data_own_department__l
+      
+      // 組織相關 (47-49)
+      worker.out_tenant_id || null,                                     // 47: out_tenant_id
+      Array.isArray(worker.relevant_team) ? JSON.stringify(worker.relevant_team) : null, // 48: relevant_team
+      worker.relevant_team__r || null,                                  // 49: relevant_team__r
+      
+      // 系統欄位 (50-56)
+      worker.record_type || 'default__c',                               // 50: record_type
+      worker.origin_source || null,                                     // 51: origin_source
+      worker.package || null,                                           // 52: package
+      worker.version || null,                                           // 53: version
+      worker.order_by || null,                                          // 54: order_by
+      worker.total_num || null,                                         // 55: total_num
+      Array.isArray(worker.searchAfterId) ? JSON.stringify(worker.searchAfterId) : null, // 56: searchAfterId
+      
+      // 同步欄位 (57-59)
+      worker.create_time || Date.now(),                                 // 57: fx_created_at
+      worker.last_modified_time || Date.now(),                          // 58: fx_updated_at
+      0                                                                  // 59: sync_version
+      // sync_time is handled by DEFAULT CURRENT_TIMESTAMP, don't bind
     ).run();
   }
 
@@ -2424,9 +2535,47 @@ export class DataSyncService {
   }
 
   /**
-   * 獲取最後同步時間
+   * 獲取最後同步時間 - 修復版本
+   * 使用實際數據修改時間而非同步完成時間
    */
   async getLastSyncTime(entityType) {
+    // 獲取對應的表名
+    const tableName = this.getTableName(entityType);
+    if (!tableName) {
+      console.log(`[getLastSyncTime] 未知實體類型: ${entityType}`);
+      return null;
+    }
+
+    try {
+      // 直接查詢數據表中的最大 last_modified_time
+      const result = await this.db.prepare(`
+        SELECT MAX(last_modified_time) as last_sync
+        FROM ${tableName}
+        WHERE is_deleted = FALSE
+      `).bind().first();
+      
+      if (result?.last_sync) {
+        // FX API 期望時間戳格式（毫秒）
+        const timestamp = typeof result.last_sync === 'number' ? 
+          result.last_sync : new Date(result.last_sync).getTime();
+        console.log(`[getLastSyncTime] 實體類型: ${entityType}, 表: ${tableName}, 最後數據修改時間: ${result.last_sync}, 時間戳: ${timestamp}`);
+        return timestamp;
+      }
+      
+      console.log(`[getLastSyncTime] 實體類型: ${entityType}, 表: ${tableName}, 沒有找到數據記錄`);
+      return null;
+      
+    } catch (error) {
+      console.error(`[getLastSyncTime] 查詢失敗, 實體: ${entityType}, 表: ${tableName}:`, error);
+      // 降級到舊邏輯
+      return await this.getLastSyncTimeFromLogs(entityType);
+    }
+  }
+
+  /**
+   * 降級方法：從同步日誌獲取時間（舊邏輯）
+   */
+  async getLastSyncTimeFromLogs(entityType) {
     const result = await this.db.prepare(`
       SELECT MAX(completed_at) as last_sync
       FROM sync_logs
@@ -2434,14 +2583,29 @@ export class DataSyncService {
     `).bind(entityType).first();
     
     if (result?.last_sync) {
-      // FX API 期望時間戳格式（毫秒）
       const timestamp = new Date(result.last_sync).getTime();
-      console.log(`[getLastSyncTime] 實體類型: ${entityType}, 最後同步時間: ${result.last_sync}, 時間戳: ${timestamp}`);
+      console.log(`[getLastSyncTimeFromLogs] 實體類型: ${entityType}, 日誌時間: ${result.last_sync}, 時間戳: ${timestamp}`);
       return timestamp;
     }
     
-    console.log(`[getLastSyncTime] 實體類型: ${entityType}, 沒有找到同步記錄`);
     return null;
+  }
+
+  /**
+   * 獲取實體對應的表名
+   */
+  getTableName(entityType) {
+    const tableMap = {
+      'NewOpportunityObj': 'newopportunityobj',
+      'object_8W9cb__c': 'object_8w9cb__c',
+      'object_k1XqG__c': 'object_k1xqg__c',
+      'object_50HJ8__c': 'object_50hj8__c',
+      'SupplierObj': 'supplierobj',
+      'site_cabinet__c': 'site_cabinet__c',
+      'progress_management_announ__c': 'progress_management_announ__c'
+    };
+    
+    return tableMap[entityType] || null;
   }
 
   /**

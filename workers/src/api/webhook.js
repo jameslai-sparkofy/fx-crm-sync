@@ -1,6 +1,5 @@
 import { Router } from 'itty-router';
-import { FxClient } from '../utils/fx-client.js';
-import { DataSyncService } from '../sync/data-sync-service.js';
+import { RealtimeSyncService } from '../services/realtime-sync-service.js';
 import { SyncLogger } from '../services/sync-logger.js';
 
 export const webhookRoutes = Router({ base: '/api/webhook' });
@@ -20,18 +19,17 @@ export const webhookRoutes = Router({ base: '/api/webhook' });
  */
 webhookRoutes.post('/notify', async (request) => {
   const { env } = request;
-  const syncLogger = new SyncLogger(env.DB);
   const startTime = Date.now();
+  let payload;
   
   try {
     // 解析請求內容
-    const payload = await request.json();
+    payload = await request.json();
     console.log('[Webhook] 收到通知:', JSON.stringify(payload, null, 2));
     
     // 驗證必要欄位
     if (!payload.event || !payload.objectApiName || !payload.objectId) {
       const error = '缺少必要欄位: event, objectApiName, objectId';
-      await syncLogger.logWebhookSync(request, payload, { success: false, error });
       return new Response(JSON.stringify({
         success: false,
         error
@@ -41,69 +39,50 @@ webhookRoutes.post('/notify', async (request) => {
       });
     }
     
-    // 記錄 Webhook 事件
-    await env.DB.prepare(`
-      INSERT INTO webhook_logs (
-        event_type, object_api_name, object_id, 
-        payload, received_at
-      ) VALUES (?, ?, ?, ?, ?)
-    `).bind(
-      payload.event,
-      payload.objectApiName,
-      payload.objectId,
-      JSON.stringify(payload),
-      new Date().toISOString()
-    ).run();
+    // 記錄 Webhook 事件到數據庫
+    const logId = await logWebhookReceived(env.DB, payload);
     
-    let syncResult = { success: true };
+    // 使用新的即時同步服務處理
+    const realtimeSyncService = new RealtimeSyncService(env);
+    await realtimeSyncService.init();
     
-    // 根據事件類型處理
-    try {
-      switch (payload.event) {
-        case 'object.created':
-        case 'object.updated':
-          // 觸發單筆記錄同步
-          await syncSingleRecord(env, payload.objectApiName, payload.objectId, payload.data);
-          break;
-          
-        case 'object.deleted':
-          // 標記記錄為已刪除
-          await markRecordAsDeleted(env, payload.objectApiName, payload.objectId);
-          break;
-          
-        default:
-          console.log('[Webhook] 未知事件類型:', payload.event);
-      }
-    } catch (syncError) {
-      syncResult = { success: false, error: syncError.message };
-      throw syncError;
-    }
+    const syncResult = await realtimeSyncService.handleRealtimeSync(payload);
     
-    // 記錄同步日誌
-    syncResult.duration = Date.now() - startTime;
-    await syncLogger.logWebhookSync(request, payload, syncResult);
+    // 更新webhook日誌狀態
+    await updateWebhookLogStatus(env.DB, logId, syncResult.success, syncResult.error);
     
     return new Response(JSON.stringify({
-      success: true,
-      message: 'Webhook 處理成功',
-      duration: syncResult.duration
+      success: syncResult.success,
+      message: syncResult.success ? 
+        (syncResult.skipped ? '已跳過同步（避免衝突）' : 'Webhook 處理成功') : 
+        'Webhook 處理失敗',
+      data: {
+        skipped: syncResult.skipped || false,
+        reason: syncResult.reason,
+        recordsProcessed: syncResult.recordsProcessed || 0,
+        duration: syncResult.duration
+      }
     }), {
+      status: syncResult.success ? 200 : 500,
       headers: { 'Content-Type': 'application/json' }
     });
     
   } catch (error) {
     console.error('[Webhook] 處理失敗:', error);
     
-    // 記錄失敗日誌
-    await syncLogger.logWebhookSync(request, payload || {}, { 
-      success: false, 
-      error: error.message,
-      duration: Date.now() - startTime
-    });
+    // 如果有payload和logId，更新失敗狀態
+    if (payload) {
+      try {
+        await updateWebhookLogStatus(env.DB, null, false, error.message, payload);
+      } catch (logError) {
+        console.error('[Webhook] 記錄失敗日誌時出錯:', logError);
+      }
+    }
     
     return new Response(JSON.stringify({
       success: false,
-      error: error.message
+      error: error.message,
+      duration: Date.now() - startTime
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
@@ -198,6 +177,93 @@ webhookRoutes.get('/logs', async (request) => {
 });
 
 /**
+ * 即時同步統計
+ * GET /api/webhook/realtime-stats
+ */
+webhookRoutes.get('/realtime-stats', async (request) => {
+  const { env } = request;
+  
+  try {
+    const realtimeSyncService = new RealtimeSyncService(env);
+    const stats = await realtimeSyncService.getRealtimeSyncStats(7);
+    
+    // 獲取概覽視圖數據
+    const overviewResult = await env.DB.prepare(`
+      SELECT * FROM v_realtime_sync_overview
+    `).all();
+    
+    // 獲取最近的活動
+    const recentActivityResult = await env.DB.prepare(`
+      SELECT * FROM v_recent_webhook_activity LIMIT 10
+    `).all();
+    
+    return new Response(JSON.stringify({
+      success: true,
+      data: {
+        stats: stats,
+        overview: overviewResult.results || [],
+        recentActivity: recentActivityResult.results || []
+      }
+    }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+  } catch (error) {
+    return new Response(JSON.stringify({
+      success: false,
+      error: error.message
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+});
+
+/**
+ * 測試webhook端點
+ * POST /api/webhook/test
+ */
+webhookRoutes.post('/test', async (request) => {
+  const { env } = request;
+  
+  try {
+    // 創建測試webhook payload
+    const testPayload = {
+      event: 'object.updated',
+      objectApiName: 'object_8W9cb__c',
+      objectId: 'test_' + Date.now(),
+      data: {
+        name: '測試案場',
+        shift_time__c: '測試工班'
+      },
+      timestamp: Date.now()
+    };
+    
+    console.log('[Webhook Test] 創建測試payload:', testPayload);
+    
+    // 記錄測試事件
+    await logWebhookReceived(env.DB, testPayload);
+    
+    return new Response(JSON.stringify({
+      success: true,
+      message: '測試webhook已記錄',
+      data: testPayload
+    }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+  } catch (error) {
+    return new Response(JSON.stringify({
+      success: false,
+      error: error.message
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+});
+
+/**
  * 同步單筆記錄
  */
 async function syncSingleRecord(env, objectApiName, objectId, changedData = null) {
@@ -274,41 +340,65 @@ async function syncSingleRecord(env, objectApiName, objectId, changedData = null
 }
 
 /**
- * 標記記錄為已刪除
+ * 記錄webhook接收日誌
  */
-async function markRecordAsDeleted(env, objectApiName, objectId) {
+async function logWebhookReceived(db, payload) {
   try {
-    // 對象名稱到表名的映射
-    const tableMapping = {
-      'NewOpportunityObj': 'newopportunityobj',
-      'object_8W9cb__c': 'object_8w9cb__c',
-      'object_k1XqG__c': 'object_k1xqg__c',
-      'object_50HJ8__c': 'object_50hj8__c',
-      'SupplierObj': 'supplierobj',
-      'site_cabinet__c': 'site_cabinet__c',
-      'progress_management_announ__c': 'progress_management_announ__c'
-    };
-    
-    const tableName = tableMapping[objectApiName];
-    if (!tableName) {
-      throw new Error(`不支持的對象類型: ${objectApiName}`);
-    }
-    
-    await env.DB.prepare(`
-      UPDATE ${tableName} 
-      SET is_deleted = 1, 
-          fx_updated_at = ?,
-          sync_time = CURRENT_TIMESTAMP
-      WHERE _id = ?
+    const result = await db.prepare(`
+      INSERT INTO webhook_logs (
+        event_type, object_api_name, object_id, 
+        payload, received_at, status
+      ) VALUES (?, ?, ?, ?, ?, 'PENDING')
     `).bind(
-      Date.now(),
-      objectId
+      payload.event,
+      payload.objectApiName,
+      payload.objectId,
+      JSON.stringify(payload),
+      new Date().toISOString()
     ).run();
     
-    console.log('[Webhook] 標記記錄為已刪除:', objectId);
-    
+    return result.meta.last_row_id;
   } catch (error) {
-    console.error('[Webhook] 標記刪除失敗:', error);
-    throw error;
+    console.error('[Webhook] 記錄接收日誌失敗:', error);
+    return null;
+  }
+}
+
+/**
+ * 更新webhook日誌狀態
+ */
+async function updateWebhookLogStatus(db, logId, success, errorMessage, payload = null) {
+  try {
+    if (logId) {
+      // 更新現有記錄
+      await db.prepare(`
+        UPDATE webhook_logs 
+        SET status = ?, error_message = ?, processed_at = ?
+        WHERE id = ?
+      `).bind(
+        success ? 'SUCCESS' : 'FAILED',
+        errorMessage || null,
+        new Date().toISOString(),
+        logId
+      ).run();
+    } else if (payload) {
+      // 創建新的失敗記錄
+      await db.prepare(`
+        INSERT INTO webhook_logs (
+          event_type, object_api_name, object_id,
+          payload, received_at, processed_at, status, error_message
+        ) VALUES (?, ?, ?, ?, ?, ?, 'FAILED', ?)
+      `).bind(
+        payload.event,
+        payload.objectApiName,
+        payload.objectId,
+        JSON.stringify(payload),
+        new Date().toISOString(),
+        new Date().toISOString(),
+        errorMessage
+      ).run();
+    }
+  } catch (error) {
+    console.error('[Webhook] 更新日誌狀態失敗:', error);
   }
 }

@@ -22,7 +22,7 @@ export class FxClient {
     if (this.accessToken && this.tokenExpiry && Date.now() < this.tokenExpiry) {
       // 確保有用戶ID
       if (!this.currentOpenUserId) {
-        this.currentOpenUserId = 'FSUID_6D8AAEFBF14B69998CF7D51D21FD8309';
+        this.currentOpenUserId = 'FSUID_CBF443F942C4ABE8A46BE859066A5CD1';
       }
       return;
     }
@@ -36,7 +36,7 @@ export class FxClient {
       this.tokenExpiry = cached.expiry;
       // 確保有用戶ID
       if (!this.currentOpenUserId) {
-        this.currentOpenUserId = 'FSUID_6D8AAEFBF14B69998CF7D51D21FD8309';
+        this.currentOpenUserId = 'FSUID_CBF443F942C4ABE8A46BE859066A5CD1';
       }
       return;
     }
@@ -325,7 +325,7 @@ export class FxClient {
       } catch (userError) {
         console.warn('獲取用戶ID失敗，使用默認值:', userError.message);
         // 使用默認的用戶ID（這是從成功的測試中獲取的）
-        this.currentOpenUserId = 'FSUID_6D8AAEFBF14B69998CF7D51D21FD8309';
+        this.currentOpenUserId = 'FSUID_CBF443F942C4ABE8A46BE859066A5CD1';
       }
 
       // 緩存token和相關信息

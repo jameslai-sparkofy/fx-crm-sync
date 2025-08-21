@@ -277,3 +277,96 @@ schemaRoutes.get('/:objectApiName/structure', async (request) => {
     });
   }
 });
+
+/**
+ * 獲取所有數據庫表結構信息 - 為 Claude Code 優化
+ * GET /api/schema/all-tables
+ */
+schemaRoutes.get('/all-tables', async (request) => {
+  const { env } = request;
+  
+  try {
+    // 獲取所有表名（排除系統表）
+    const tables = await env.DB.prepare(`
+      SELECT name FROM sqlite_master 
+      WHERE type='table' 
+      AND name NOT LIKE 'sqlite_%' 
+      AND name NOT LIKE '_cf_%'
+      ORDER BY name
+    `).all();
+    
+    const tableStructures = {};
+    
+    // 遍歷每個表獲取結構信息
+    for (const table of tables.results) {
+      const tableName = table.name;
+      
+      try {
+        // 獲取表結構
+        const columns = await env.DB.prepare(`
+          PRAGMA table_info(${tableName})
+        `).all();
+        
+        // 獲取記錄數量
+        const count = await env.DB.prepare(`
+          SELECT COUNT(*) as count FROM ${tableName}
+        `).first();
+        
+        // 格式化列信息
+        const formattedColumns = columns.results.map(col => ({
+          name: col.name,
+          type: col.type,
+          nullable: col.notnull === 0,
+          defaultValue: col.dflt_value,
+          primaryKey: col.pk === 1
+        }));
+        
+        tableStructures[tableName] = {
+          tableName,
+          recordCount: count.count,
+          columns: formattedColumns,
+          columnCount: formattedColumns.length,
+          primaryKeys: formattedColumns.filter(col => col.primaryKey).map(col => col.name)
+        };
+        
+      } catch (error) {
+        console.error(`獲取表 ${tableName} 結構失敗:`, error);
+        tableStructures[tableName] = {
+          tableName,
+          error: error.message
+        };
+      }
+    }
+    
+    // 添加摘要信息
+    const summary = {
+      totalTables: tables.results.length,
+      successfulTables: Object.keys(tableStructures).filter(t => !tableStructures[t].error).length,
+      failedTables: Object.keys(tableStructures).filter(t => tableStructures[t].error).length,
+      generatedAt: new Date().toISOString()
+    };
+    
+    return new Response(JSON.stringify({
+      success: true,
+      summary,
+      tables: tableStructures
+    }, null, 2), {
+      headers: { 
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      }
+    });
+    
+  } catch (error) {
+    console.error('獲取所有表結構失敗:', error);
+    return new Response(JSON.stringify({
+      success: false,
+      error: error.message
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+});

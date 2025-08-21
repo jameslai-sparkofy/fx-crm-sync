@@ -3,106 +3,11 @@ main = "src/index.js"
 compatibility_date = "2025-01-01"
 
 # ========================================
-# 基礎配置（所有環境共用）
+# 基礎配置
 # ========================================
 [vars]
 FX_API_BASE_URL = "https://open.fxiaoke.com"
 SYNC_INTERVAL = "300000"
-
-# ========================================
-# 默認環境（開發環境）
-# ========================================
-[[d1_databases]]
-binding = "DB"
-database_name = "fx-crm-database-dev"
-database_id = "dev-database-id-here"
-
-[[kv_namespaces]]
-binding = "KV"
-id = "dev-kv-namespace-id"
-
-[[r2_buckets]]
-binding = "R2_BUCKET"
-bucket_name = "fx-crm-images-dev"
-
-[triggers]
-# Webhook 模式：不使用定時同步，依賴 webhook 即時同步
-crons = []
-
-# ========================================
-# 開發環境配置
-# ========================================
-[env.development]
-name = "fx-crm-sync-dev"
-
-[env.development.vars]
-FX_API_BASE_URL = "https://open.fxiaoke.com"
-SYNC_INTERVAL = "300000"
-ENVIRONMENT = "development"
-DEBUG = "true"
-LOG_LEVEL = "debug"
-SYNC_BATCH_SIZE = "50"
-SYNC_MAX_BATCHES = "2"
-ENABLE_AUTO_SYNC = "false"
-
-# 使用生產環境的 D1 資料庫（共用）
-[[env.development.d1_databases]]
-binding = "DB"
-database_name = "fx-crm-database"
-database_id = "332221d8-61cb-4084-88dc-394e208ae8b4"
-
-# 使用生產環境的 KV Namespace（共用）
-[[env.development.kv_namespaces]]
-binding = "KV"
-id = "714f07950ac84f6ba8e00d3c961a6325"
-
-# 使用生產環境的 R2 Bucket（共用）
-[[env.development.r2_buckets]]
-binding = "R2_BUCKET"
-bucket_name = "fx-crm-images"
-
-[env.development.triggers]
-# Webhook 模式：不使用定時同步
-crons = []
-
-# ========================================
-# 測試環境配置
-# ========================================
-[env.staging]
-name = "fx-crm-sync-staging"
-
-[env.staging.vars]
-ENVIRONMENT = "staging"
-DEBUG = "true"
-LOG_LEVEL = "info"
-SYNC_BATCH_SIZE = "100"
-SYNC_MAX_BATCHES = "2"
-ENABLE_AUTO_SYNC = "false"
-
-[[env.staging.d1_databases]]
-binding = "DB"
-database_name = "fx-crm-database-staging"
-database_id = "staging-database-id-here"
-
-[[env.staging.kv_namespaces]]
-binding = "KV"
-id = "staging-kv-namespace-id"
-
-[[env.staging.r2_buckets]]
-binding = "R2_BUCKET"
-bucket_name = "fx-crm-images-staging"
-
-[env.staging.triggers]
-# Webhook 模式：僅作為備份，每天凌晨 3 點執行一次完整同步以確保資料一致性
-crons = ["0 3 * * *"]
-
-# ========================================
-# 生產環境配置
-# ========================================
-[env.production]
-name = "fx-crm-sync"
-
-[env.production.vars]
 ENVIRONMENT = "production"
 DEBUG = "false"
 LOG_LEVEL = "error"
@@ -110,22 +15,25 @@ SYNC_BATCH_SIZE = "200"
 SYNC_MAX_BATCHES = "3"
 ENABLE_AUTO_SYNC = "true"
 
-[[env.production.d1_databases]]
+# ========================================
+# 生產環境資源
+# ========================================
+[[d1_databases]]
 binding = "DB"
 database_name = "fx-crm-database"
 database_id = "332221d8-61cb-4084-88dc-394e208ae8b4"
 
-[[env.production.kv_namespaces]]
+[[kv_namespaces]]
 binding = "KV"
 id = "714f07950ac84f6ba8e00d3c961a6325"
 
-[[env.production.r2_buckets]]
+[[r2_buckets]]
 binding = "R2_BUCKET"
 bucket_name = "fx-crm-images"
 
-[env.production.triggers]
-# Webhook 模式：僅作為備份，每天凌晨 2 點執行一次完整同步以確保資料一致性
-crons = ["0 2 * * *"]
+[triggers]
+# 自動同步：每小時執行一次增量同步以保持資料最新
+crons = ["0 * * * *"]
 
 # ========================================
 # 兼容性設置

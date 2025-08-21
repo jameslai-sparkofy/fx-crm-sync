@@ -26,6 +26,43 @@ syncRoutes.post('/:objectApiName/start', async (request) => {
     // 檢查請求參數
     const body = await request.json().catch(() => ({}));
     
+    // 支持測試模式參數
+    if (body.testMode && body.limit) {
+      console.log(`[測試模式] 限制同步 ${body.limit} 條記錄`);
+      const isCustom = objectApiName.endsWith('__c');
+      result = await dynamicSyncService.syncDynamicObject(
+        objectApiName, 
+        isCustom, 
+        { 
+          fullSync: body.fullSync,
+          limit: body.limit,
+          testMode: true
+        }
+      );
+      
+      // 返回詳細結果
+      return new Response(JSON.stringify({
+        success: true,
+        testMode: true,
+        limit: body.limit,
+        data: {
+          objectApiName,
+          message: `測試同步完成 (限制 ${body.limit} 條)`,
+          result,
+          details: {
+            requestedLimit: body.limit,
+            actualProcessed: result.success + result.errors,
+            success: result.success,
+            errors: result.errors,
+            successRate: result.success + result.errors > 0 ? 
+              ((result.success / (result.success + result.errors)) * 100).toFixed(1) + '%' : '0%'
+          }
+        }
+      }), {
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    
     // 所有對象都使用動態同步
     const isCustom = objectApiName.endsWith('__c');
     result = await dynamicSyncService.syncDynamicObject(objectApiName, isCustom, { fullSync: body.fullSync });
